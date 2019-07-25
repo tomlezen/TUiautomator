@@ -11,6 +11,7 @@ import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
  * Date: 2019-07-25.
  * Time: 17:29.
  */
+@Keep
 interface TUiautomatorGestures {
 
     /**
@@ -75,6 +76,7 @@ interface TUiautomatorGestures {
      * @param duration Long
      * @return TUiautomatorResult<Boolean>
      */
+    @TUiautomatorMethodName(TUiautomatorMethods.GRAG)
     fun drag(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 500): TUiautomatorResult<Boolean>
 
     /**

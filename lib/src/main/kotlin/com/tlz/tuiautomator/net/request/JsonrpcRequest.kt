@@ -32,7 +32,7 @@ fun jsonrpcRequest(
 fun clickReuest(
     x: Int,
     y: Int
-) = jsonrpcRequest(method = "click", params = arrayOf(x, y))
+) = jsonrpcRequest(method = TUi, params = arrayOf(x, y))
 
 fun pressKeyReuest(
     name: String

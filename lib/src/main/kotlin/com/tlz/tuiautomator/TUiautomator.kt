@@ -19,24 +19,7 @@ interface TUiautomator {
 
     /** 手势. */
     val gestures: TUiautomatorGestures
-//
-//    /**
-//     * 点击坐标.
-//     * @param x Int
-//     * @param y Int
-//     * @return TUiautomatorResult<Boolean>
-//     */
-//    suspend fun click(x: Int, y: Int): TUiautomatorResult<Boolean>
-//
-//    /**
-//     * 双击坐标.
-//     * @param x Int
-//     * @param y Int
-//     * @param delay Long 点击时间间隔.
-//     * @return TUiautomatorResult<Boolean>
-//     */
-//    suspend fun doubleClick(x: Int, y: Int, delay: Long = 0L): TUiautomatorResult<Boolean>
-//
+
 //    /**
 //     * 滑动到末尾.
 //     * @param scrollable Boolean
