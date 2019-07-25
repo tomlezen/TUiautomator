@@ -1,0 +1,60 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript { scriptHandler ->
+    apply from: 'repositories.gradle', to: scriptHandler
+    apply from: 'configs.gradle'
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+subprojects {
+    // 这里是处理ExperimentalContracts警告问题
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            freeCompilerArgs = [
+                    "-Xuse-experimental=kotlin.Experimental",
+                    "-Xuse-experimental=kotlin.contracts.ExperimentalContracts",
+            ]
+        }
+    }
+
+    def projectName = project.name
+    /** 是否是应用模块. */
+    def isApplicationModule = projectName == "app"
+    if (isApplicationModule) {
+        apply plugin: 'com.android.application'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+
+    apply from: '../core_dependencies.gradle'
+//    apply from: '../test_dependencies.gradle'
+    apply from: '../repositories.gradle'
+
+    android {
+        sourceSets {
+            def src_dir = new File(projectDir, 'src')
+
+            def p_module_names = src_dir.list().toList().findAll { name -> name == 'main' || (name.startsWith('p_') && new File(src_dir, name).isDirectory()) }
+
+            main {
+                manifest.srcFile "src/main/AndroidManifest.xml"
+                p_module_names.each { module ->
+                    java.srcDirs += ['src', module, 'java'].join('/')
+                    java.srcDirs += ['src', module, 'kotlin'].join('/')
+                    res.srcDirs += ['src', module, 'res'].join('/')
+                    assets.srcDirs += ['src', module, 'assets'].join('/')
+                }
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

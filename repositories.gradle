@@ -1,0 +1,6 @@
+// =======================================       所有repositories配置      =======================================
+repositories {
+    maven { url "https://jitpack.io" }
+    google()
+    jcenter()
+}
