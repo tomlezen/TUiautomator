@@ -54,11 +54,11 @@ interface TUiautomatorGestures {
      * @param sy Int
      * @param ex Int
      * @param ey Int
-     * @param duration Long
+     * @param steps Long
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 500): TUiautomatorResult<Boolean>
+    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Long = 20): TUiautomatorResult<Boolean>
 
     /**
      * 滑动点到点.
@@ -66,11 +66,11 @@ interface TUiautomatorGestures {
      * @param p0 Pair<Int, Int>
      * @param p1 Pair<Int, Int>
      * @param p2 Pair<Int, Int>
-     * @param speed Long
+     * @param steps Long
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(p0: Pair<Int, Int>, p1: Pair<Int, Int>, p2: Pair<Int, Int>, speed: Long): TUiautomatorResult<Boolean>
+    fun swipe(p0: Pair<Int, Int>, p1: Pair<Int, Int>, p2: Pair<Int, Int>, steps: Long = 20): TUiautomatorResult<Boolean>
 
     /**
      * 拖拽.
