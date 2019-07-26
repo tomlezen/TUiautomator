@@ -1,8 +1,13 @@
 package com.tlz.tuiautomator.i
 
+import androidx.annotation.Keep
 import com.tlz.tuiautomator.TUiautomatorMethods
 import com.tlz.tuiautomator.TUiautomatorResult
+import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
+import com.tlz.tuiautomator.annotations.TUiautomatorTouchEventType
+import com.tlz.tuiautomator.i.handlers.TUiautomatorGesturesHandler
+import java.lang.reflect.Proxy
 
 /**
  * 手势相关接口.
@@ -30,8 +35,8 @@ interface TUiautomatorGestures {
      * @param duration Long
      * @return TUiautomatorResult<Boolean>
      */
-    @TUiautomatorMethodName(TUiautomatorMethods.CLICK)
-    fun longClick(x: Int, y: Int, duration: Long = 100): TUiautomatorResult<Boolean>
+    @TUiautomatorMethodName(TUiautomatorMethods.LONG_CLICK)
+    fun longClick(x: Int, y: Int, duration: Long = 500): TUiautomatorResult<Boolean>
 
     /**
      * 双击.
@@ -40,8 +45,8 @@ interface TUiautomatorGestures {
      * @param delay Long
      * @return TUiautomatorResult<Boolean>
      */
-    @TUiautomatorMethodName(TUiautomatorMethods.CLICK)
-    fun doubleClick(x: Int, y: Int, delay: Long = 500): TUiautomatorResult<Boolean>
+    @TUiautomatorMethodName(TUiautomatorMethods.DOUBLE_CLICK)
+    fun doubleClick(x: Int, y: Int, delay: Long = 100): TUiautomatorResult<Boolean>
 
     /**
      * 滑，扫.
@@ -76,8 +81,8 @@ interface TUiautomatorGestures {
      * @param duration Long
      * @return TUiautomatorResult<Boolean>
      */
-    @TUiautomatorMethodName(TUiautomatorMethods.GRAG)
-    fun drag(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 500): TUiautomatorResult<Boolean>
+    @TUiautomatorMethodName(TUiautomatorMethods.DRAG)
+    fun drag(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 50): TUiautomatorResult<Boolean>
 
     /**
      * 按下操作.
@@ -85,6 +90,8 @@ interface TUiautomatorGestures {
      * @param y Int
      * @return TUiautomatorResult<Boolean>
      */
+    @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
+    @TUiautomatorTouchEventType(0)
     fun touchDown(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     /**
@@ -93,6 +100,8 @@ interface TUiautomatorGestures {
      * @param y Int
      * @return TUiautomatorResult<Boolean>
      */
+    @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
+    @TUiautomatorTouchEventType(2)
     fun touchMove(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     /**
@@ -101,5 +110,16 @@ interface TUiautomatorGestures {
      * @param y Int
      * @return TUiautomatorResult<Boolean>
      */
+    @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
+    @TUiautomatorTouchEventType(1)
     fun touchUp(x: Int, y: Int): TUiautomatorResult<Boolean>
+
+    companion object {
+        operator fun invoke(service: TUiautomatorService): TUiautomatorGestures =
+            Proxy.newProxyInstance(
+                TUiautomatorGestures::class.java.classLoader,
+                arrayOf(TUiautomatorGestures::class.java),
+                TUiautomatorGesturesHandler(service)
+            ) as TUiautomatorGestures
+    }
 }

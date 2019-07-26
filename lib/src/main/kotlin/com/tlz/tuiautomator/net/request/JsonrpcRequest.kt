@@ -29,11 +29,6 @@ fun jsonrpcRequest(
     params: Any? = null
 ) = JsonrpcRequest(jsonrpc, id, method, params)
 
-fun clickReuest(
-    x: Int,
-    y: Int
-) = jsonrpcRequest(method = TUi, params = arrayOf(x, y))
-
 fun pressKeyReuest(
     name: String
 ) = jsonrpcRequest(method = TUiautomatorMethods.PRESS_KEY, params = arrayOf(name))
@@ -63,7 +58,3 @@ fun scrollForwardRequest(
     scroll: ScrollRequestParams,
     vararg param: Any
 ) = jsonrpcRequest(method = "scrollForward", params = param.asList() + scroll)
-
-fun injectInputEventRequest(
-    vararg param: Int
-) = jsonrpcRequest(method = "injectInputEvent", params = param)

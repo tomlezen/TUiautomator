@@ -37,6 +37,9 @@ interface TUiautomator {
 
     companion object {
 
+        /** atx-agent默认端口. */
+        const val ATX_AGENT_PORT = "7912"
+
         operator fun invoke(config: TUiautomatorConfig = TUiautomatorConfig()):
                 TUiautomator = TUiautomatorService(config)
 

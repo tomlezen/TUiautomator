@@ -1,7 +1,7 @@
 package com.tlz.tuiautomator.net.model
 
 import androidx.annotation.Keep
-import com.tlz.tuiautomator.TUiautomatorRequestException
+import com.tlz.tuiautomator.exceptions.TUiautomatorRequestException
 
 /**
  * jsonrpc请求结果.
@@ -26,6 +26,10 @@ data class JsonrpcResult(
 
     fun unwrap(): Any {
         if (result != null) return result
-        throw TUiautomatorRequestException(error?.code ?: -1, error?.message ?: "", error?.data ?: "")
+        throw TUiautomatorRequestException(
+            error?.code ?: -1,
+            error?.message ?: "",
+            error?.data ?: ""
+        )
     }
 }

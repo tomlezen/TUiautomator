@@ -1,15 +1,12 @@
 package com.tlz.tuiautomator
 
-import com.tlz.tuiautomator.annotations.TUiautomatorKeyName
+import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
 import com.tlz.tuiautomator.net.TUiautomatorApiService
 import com.tlz.tuiautomator.net.request.JsonrpcRequest
-import com.tlz.tuiautomator.net.request.pressKeyReuest
-import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.reflect.Proxy
 import java.util.concurrent.TimeUnit
 
 /**
@@ -18,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * Date: 2019-07-25.
  * Time: 13:58.
  */
-internal class TUiautomatorService(private val config: TUiautomatorConfig) : TUiautomator {
+class TUiautomatorService internal constructor(private val config: TUiautomatorConfig) : TUiautomator {
 
     private val okhttp by lazy {
         OkHttpClient.Builder()
@@ -31,7 +28,7 @@ internal class TUiautomatorService(private val config: TUiautomatorConfig) : TUi
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http:${config.atxAgentIp}:$ATX_AGENT_PORT")
+            .baseUrl("http:${config.atxAgentIp}:${config.atxAgentPort}")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okhttp)
             .build()
@@ -41,31 +38,9 @@ internal class TUiautomatorService(private val config: TUiautomatorConfig) : TUi
         retrofit.create(TUiautomatorApiService::class.java)
     }
 
-    override val keys: TUiautomatorKeys = createTUiautomatorKeys()
+    override val keys: TUiautomatorKeys = TUiautomatorKeys(this)
 
-    /**
-     * 创建TUiautomatorKeys动态代理.
-     * @return TUiautomatorKeys
-     * @throws Throwable
-     */
-    private fun createTUiautomatorKeys(): TUiautomatorKeys =
-        Proxy.newProxyInstance(
-            TUiautomatorKeys::class.java.classLoader, arrayOf(TUiautomatorKeys::class.java)
-        ) { _, method, _ ->
-            runBlocking {
-                runTCatching {
-                    // 先查找注解
-                    val nameAnnotation = method.getAnnotation(TUiautomatorKeyName::class.java)
-                    val name = nameAnnotation?.name ?: method.name
-                    pressKeyReuest(name).request().toString().toBoolean()
-                }
-            }
-        } as TUiautomatorKeys
+    override val gestures: TUiautomatorGestures = TUiautomatorGestures(this)
 
-    private suspend fun JsonrpcRequest.request() = apiService.jsonrpc(this).unwrap()
-
-    companion object {
-        /** atx-agent默认端口. */
-        private const val ATX_AGENT_PORT = "7912"
-    }
+    suspend infix fun rq(request: JsonrpcRequest) = apiService.jsonrpc(request).unwrap()
 }

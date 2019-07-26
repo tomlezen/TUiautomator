@@ -81,15 +81,6 @@ inline fun <T, R> T.runTCatching(block: T.() -> R): TUiautomatorResult<R> {
     }
 }
 
-inline suspend fun <T, R> T.runTCatching1(block: T.() -> R): TUiautomatorResult<R> {
-    return try {
-        TUiautomatorResult.success(block())
-    } catch (e: Throwable) {
-        Logger.e(e, "")
-        TUiautomatorResult.failure(e)
-    }
-}
-
 @ExperimentalContracts
 inline fun <R, T : R> TUiautomatorResult<T>.getOrElse(onFailure: (exception: Throwable) -> R): R {
     contract {

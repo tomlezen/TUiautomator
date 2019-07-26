@@ -9,12 +9,15 @@ package com.tlz.tuiautomator
 object TUiautomatorMethods {
 
     const val CLICK = "click"
+    const val LONG_CLICK = "longClick"
+    const val DOUBLE_CLICK = "doubleClick"
     const val SWIPE = "swipe"
     const val PRESS_KEY = "pressKey"
     const val SCROLL_TO = "scrollTo"
     const val SCROLL_TO_END = "scrollToEnd"
     const val SCROLL_FORWARD = "scrollForward"
     const val SCROLL_TO_BEGINNING = "scrollToBeginning"
-    const val GRAG = "drag"
+    const val DRAG = "drag"
+    const val INJECT_INPUT_EVENT = "injectInputEvent"
 
 }
