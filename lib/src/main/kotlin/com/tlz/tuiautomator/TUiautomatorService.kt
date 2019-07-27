@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * Date: 2019-07-25.
  * Time: 13:58.
  */
-class TUiautomatorService internal constructor(private val config: TUiautomatorConfig) : TUiautomator {
+class TUiautomatorService internal constructor(val config: TUiautomatorConfig) : TUiautomator {
 
     private val okhttp by lazy {
         OkHttpClient.Builder()

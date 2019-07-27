@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator.net.request
 
-import android.view.inspector.IntFlagMapping
 import androidx.annotation.Keep
 import com.tlz.tuiautomator.TUiautomatorMethods
 

@@ -54,23 +54,21 @@ interface TUiautomatorGestures {
      * @param sy Int
      * @param ex Int
      * @param ey Int
-     * @param steps Long
+     * @param steps Int 每步为5ms
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Long = 20): TUiautomatorResult<Boolean>
+    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 4): TUiautomatorResult<Boolean>
 
     /**
      * 滑动点到点.
      * 用于9宫格解锁.
-     * @param p0 Pair<Int, Int>
-     * @param p1 Pair<Int, Int>
-     * @param p2 Pair<Int, Int>
-     * @param steps Long
+     * @param p Pair<Int, Int>
+     * @param duration Long 点到点的执行时间
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(p0: Pair<Int, Int>, p1: Pair<Int, Int>, p2: Pair<Int, Int>, steps: Long = 20): TUiautomatorResult<Boolean>
+    fun swipe(vararg p: Pair<Int, Int>, duration: Long = 50): TUiautomatorResult<Boolean>
 
     /**
      * 拖拽.

@@ -26,7 +26,22 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                     ?: throw TUiautomatorParamException("method lack TUiautomatorMethodName annotation")
                 val methodName = methodNameAnnotation.name
                 // 这里为了方便追加参数
-                val params = args.toMutableList()
+                // 需要处理下 vararg参数 以及 Pair
+                val params = mutableListOf<Any>()
+                args.forEach {
+                    if (it is Array<*>) {
+                        it.forEach { sub ->
+                            if (sub is Pair<*, *>) {
+                                params.add(sub.first!!)
+                                params.add(sub.second!!)
+                            } else {
+                                params.add(sub!!)
+                            }
+                        }
+                    } else {
+                        params.add(it)
+                    }
+                }
                 when (methodName) {
                     TUiautomatorMethods.INJECT_INPUT_EVENT -> {
                         params.add(
@@ -56,6 +71,7 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                         // 发送点击事件
                         return@runTCatching proxy.click(x, y).toTBool()
                     }
+                    TUiautomatorMethods.CLICK -> delay(service.config.clickPostDelay)
                     else -> {
 
                     }

@@ -42,6 +42,13 @@ class GesturesTest {
     }
 
     @Test
+    fun swipe2() {
+        runBlocking {
+            automator.gestures.swipe(100 to 100, 400 to 100).handleTestResult()
+        }
+    }
+
+    @Test
     fun drag() {
         runBlocking {
             automator.gestures.drag(100, 100, 400, 100).handleTestResult()
