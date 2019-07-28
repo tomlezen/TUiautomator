@@ -19,5 +19,7 @@ object TUiautomatorMethods {
     const val SCROLL_TO_BEGINNING = "scrollToBeginning"
     const val DRAG = "drag"
     const val INJECT_INPUT_EVENT = "injectInputEvent"
+    const val EXIST = "exist"
+    const val OBJ_INFO = "objInfo"
 
 }

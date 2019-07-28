@@ -15,7 +15,16 @@ object TestConfig {
 
 fun TUiautomatorResult<Boolean>.handleTestResult() {
     onSuccess {
-//        assert(it)
+        assert(it)
+    }
+    onFailure {
+        it.printStackTrace()
+        assert(false)
+    }
+}
+
+fun TUiautomatorResult<Any>.handleTestResult2() {
+    onSuccess {
     }
     onFailure {
         it.printStackTrace()

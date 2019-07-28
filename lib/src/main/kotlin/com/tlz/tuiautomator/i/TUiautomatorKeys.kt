@@ -1,11 +1,10 @@
 package com.tlz.tuiautomator.i
 
-import androidx.annotation.Keep
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorKeyName
 import com.tlz.tuiautomator.i.handlers.TUiautomatorKeysHandler
-import java.lang.reflect.Proxy
+import com.tlz.tuiautomator.newTProxy
 
 /**
  * key相关接口.
@@ -13,7 +12,6 @@ import java.lang.reflect.Proxy
  * Date: 2019-07-25.
  * Time: 16:50.
  */
-@Keep
 interface TUiautomatorKeys {
 
     /**
@@ -123,10 +121,6 @@ interface TUiautomatorKeys {
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorKeys =
-            Proxy.newProxyInstance(
-                TUiautomatorKeys::class.java.classLoader,
-                arrayOf(TUiautomatorKeys::class.java),
-                TUiautomatorKeysHandler(service)
-            ) as TUiautomatorKeys
+            newTProxy(TUiautomatorKeysHandler(service))
     }
 }

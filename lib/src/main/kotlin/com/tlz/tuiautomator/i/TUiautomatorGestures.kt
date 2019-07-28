@@ -1,13 +1,12 @@
 package com.tlz.tuiautomator.i
 
-import androidx.annotation.Keep
 import com.tlz.tuiautomator.TUiautomatorMethods
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import com.tlz.tuiautomator.annotations.TUiautomatorTouchEventType
 import com.tlz.tuiautomator.i.handlers.TUiautomatorGesturesHandler
-import java.lang.reflect.Proxy
+import com.tlz.tuiautomator.newTProxy
 
 /**
  * 手势相关接口.
@@ -16,7 +15,6 @@ import java.lang.reflect.Proxy
  * Date: 2019-07-25.
  * Time: 17:29.
  */
-@Keep
 interface TUiautomatorGestures {
 
     /**
@@ -114,10 +112,6 @@ interface TUiautomatorGestures {
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorGestures =
-            Proxy.newProxyInstance(
-                TUiautomatorGestures::class.java.classLoader,
-                arrayOf(TUiautomatorGestures::class.java),
-                TUiautomatorGesturesHandler(service)
-            ) as TUiautomatorGestures
+            newTProxy(TUiautomatorGesturesHandler(service))
     }
 }

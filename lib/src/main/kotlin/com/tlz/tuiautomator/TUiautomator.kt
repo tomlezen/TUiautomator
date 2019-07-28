@@ -2,6 +2,8 @@ package com.tlz.tuiautomator
 
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
+import com.tlz.tuiautomator.selector.TUiautomatorSelectors
+import com.tlz.tuiautomator.selector.TUiSelector
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
@@ -20,20 +22,8 @@ interface TUiautomator {
     /** 手势. */
     val gestures: TUiautomatorGestures
 
-//    /**
-//     * 滑动到末尾.
-//     * @param scrollable Boolean
-//     * @return TUiautomatorResult<Boolean>
-//     */
-//    suspend fun scrollToEnd(scrollable: Boolean): TUiautomatorResult<Boolean>
-//
-//    suspend fun scrollTo()
-//
-//    suspend fun scrollForward()
-//
-//    suspend fun scrollToBeginning()
-
-//    suspend fun hierarchy(): TUiautomatorResult<Boolean>
+    /** 选择器. */
+    fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors
 
     companion object {
 
