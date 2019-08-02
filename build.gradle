@@ -29,30 +29,21 @@ subprojects {
     if (isApplicationModule) {
         apply plugin: 'com.android.application'
     } else {
-        apply plugin: 'com.android.library'
+        apply plugin: 'kotlin'
     }
 
     apply from: '../core_dependencies.gradle'
 //    apply from: '../test_dependencies.gradle'
     apply from: '../repositories.gradle'
 
-    android {
-        sourceSets {
-            def src_dir = new File(projectDir, 'src')
-
-            def p_module_names = src_dir.list().toList().findAll { name -> name == 'main' || (name.startsWith('p_') && new File(src_dir, name).isDirectory()) }
-
-            main {
-                manifest.srcFile "src/main/AndroidManifest.xml"
-                p_module_names.each { module ->
-                    java.srcDirs += ['src', module, 'java'].join('/')
-                    java.srcDirs += ['src', module, 'kotlin'].join('/')
-                    res.srcDirs += ['src', module, 'res'].join('/')
-                    assets.srcDirs += ['src', module, 'assets'].join('/')
-                }
-            }
-        }
-    }
+//    android {
+//        sourceSets {
+//            main {
+//                java.srcDirs += ['src', 'main', 'java'].join('/')
+//                java.srcDirs += ['src', 'main', 'kotlin'].join('/')
+//            }
+//        }
+//    }
 }
 
 task clean(type: Delete) {

@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator
 
-import com.orhanobut.logger.Logger
 import java.io.Serializable
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -27,6 +26,14 @@ class TUiautomatorResult<out T> @PublishedApi internal constructor(
             isFailure -> null
             else -> value as T
         }
+
+    fun getOrThrow(): T {
+        if (value is TUiautomatorResult.Failure) {
+            throw value.exception
+        }
+        return value as T
+    }
+
 
     fun exceptionOrNull(): Throwable? =
         when (value) {
@@ -76,7 +83,6 @@ inline fun <T, R> T.runTCatching(block: T.() -> R): TUiautomatorResult<R> {
     return try {
         TUiautomatorResult.success(block())
     } catch (e: Throwable) {
-        Logger.e(e, "")
         TUiautomatorResult.failure(e)
     }
 }
