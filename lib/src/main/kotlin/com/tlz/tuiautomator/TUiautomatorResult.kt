@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator
 
+import com.tlz.tuiautomator.exceptions.TUiautomatorRequestException
 import java.io.Serializable
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

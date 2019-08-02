@@ -6,6 +6,9 @@ import com.tlz.tuiautomator.annotations.TUiautomatorTouchEventType
 import com.tlz.tuiautomator.exceptions.TUiautomatorParamException
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
+import com.tlz.tuiautomator.utils.toTBool
+import com.tlz.tuiautomator.utils.toTInt
+import com.tlz.tuiautomator.utils.toTLong
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.InvocationHandler
@@ -18,7 +21,7 @@ import java.lang.reflect.Method
  */
 class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : InvocationHandler {
 
-    override fun invoke(proxy: Any, method: Method, args: Array<out Any>): Any =
+    override fun invoke(proxy: Any, method: Method, args: Array<out Any?>): Any =
         runBlocking {
             runTCatching {
                 // 先查找方法名注解
@@ -27,7 +30,7 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                 val methodName = methodNameAnnotation.name
                 // 这里为了方便追加参数
                 // 需要处理下 vararg参数 以及 Pair
-                val params = mutableListOf<Any>()
+                val params = mutableListOf<Any?>()
                 args.forEach {
                     if (it is Array<*>) {
                         it.forEach { sub ->
@@ -56,7 +59,7 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                         val y = params[1].toTInt()
                         // 先发送down事件
                         (proxy as TUiautomatorGestures).touchDown(x, y).throwOnFailure()
-                        delay(params[2].toTLong())
+                        delay(params[2]?.toTLong() ?: service.config.longClickDuration)
                         // 在发送up事件
                         return@runTCatching proxy.touchUp(x, y).toTBool()
                     }

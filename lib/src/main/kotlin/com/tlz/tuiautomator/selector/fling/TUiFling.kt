@@ -1,7 +1,7 @@
 package com.tlz.tuiautomator.selector.fling
 
 import com.tlz.tuiautomator.TUiautomatorResult
-import com.tlz.tuiautomator.newTProxy
+import com.tlz.tuiautomator.utils.newTProxy
 import com.tlz.tuiautomator.selector.TUiautomatorSelectorAction
 import com.tlz.tuiautomator.selector.scroll.TUiScrollHandler
 

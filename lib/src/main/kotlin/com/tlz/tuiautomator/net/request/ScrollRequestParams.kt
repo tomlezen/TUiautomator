@@ -1,14 +1,11 @@
 package com.tlz.tuiautomator.net.request
 
-import androidx.annotation.Keep
-
 /**
  * 滑动请求参数.
  * By tomlezen.
  * Date: 2019-07-25.
  * Time: 15:34.
  */
-@Keep
 data class ScrollRequestParams(
     val mask: Int,
     val childOrSibling: Array<Any> = arrayOf(),

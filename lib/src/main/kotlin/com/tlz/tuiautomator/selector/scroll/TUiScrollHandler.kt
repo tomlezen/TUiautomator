@@ -4,7 +4,7 @@ import com.tlz.tuiautomator.TUiautomatorMethods
 import com.tlz.tuiautomator.runTCatching
 import com.tlz.tuiautomator.selector.TUiSelector
 import com.tlz.tuiautomator.selector.TUiautomatorSelectorAction
-import com.tlz.tuiautomator.toTBool
+import com.tlz.tuiautomator.utils.toTBool
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method

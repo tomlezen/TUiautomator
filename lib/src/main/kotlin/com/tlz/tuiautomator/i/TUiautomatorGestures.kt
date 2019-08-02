@@ -6,7 +6,7 @@ import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import com.tlz.tuiautomator.annotations.TUiautomatorTouchEventType
 import com.tlz.tuiautomator.i.handlers.TUiautomatorGesturesHandler
-import com.tlz.tuiautomator.newTProxy
+import com.tlz.tuiautomator.utils.newTProxy
 
 /**
  * 手势相关接口.
@@ -34,7 +34,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.LONG_CLICK)
-    fun longClick(x: Int, y: Int, duration: Long = 500): TUiautomatorResult<Boolean>
+    fun longClick(x: Int, y: Int, duration: Long? = null): TUiautomatorResult<Boolean>
 
     /**
      * 双击.

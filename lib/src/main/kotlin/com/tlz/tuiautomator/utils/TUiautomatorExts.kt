@@ -1,4 +1,4 @@
-package com.tlz.tuiautomator
+package com.tlz.tuiautomator.utils
 
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
@@ -11,10 +11,10 @@ import java.lang.reflect.Proxy
  * Time: 16:27.
  */
 
-fun Any.toTBool() = toString().toBoolean()
+fun Any?.toTBool() = this?.toString()?.toBoolean() ?: false
 
-fun Any.toTInt() = toString().toInt()
-fun Any.toTLong() = toString().toLong()
+fun Any?.toTInt() = this?.toString()?.toInt() ?: 0
+fun Any?.toTLong() = this?.toString()?.toLong() ?: 0L
 
 val tGson: Gson = Gson().newBuilder().create()
 

@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator.net.request
 
-import androidx.annotation.Keep
 import com.tlz.tuiautomator.TUiautomatorMethods
 
 /**
@@ -13,7 +12,6 @@ import com.tlz.tuiautomator.TUiautomatorMethods
  * @property method String 需要执行的方法名.
  * @property params Any? 参数.
  */
-@Keep
 data class JsonrpcRequest(
     val jsonrpc: String,
     val id: String,

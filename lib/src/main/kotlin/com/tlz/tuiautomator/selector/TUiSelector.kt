@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator.selector
 
-import androidx.annotation.Keep
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
@@ -9,7 +8,6 @@ import kotlin.reflect.jvm.isAccessible
  * Date: 2019-07-27.
  * Time: 09:55.
  */
-@Keep
 class TUiSelector internal constructor(
     var text: String? = null,
     var textContains: String? = null,

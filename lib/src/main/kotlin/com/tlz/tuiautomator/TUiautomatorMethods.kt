@@ -21,5 +21,7 @@ object TUiautomatorMethods {
     const val INJECT_INPUT_EVENT = "injectInputEvent"
     const val EXIST = "exist"
     const val OBJ_INFO = "objInfo"
+    const val WAIT_FOR_EXISTS = "waitForExists"
+    const val WAIT_UNTIL_GONE = "waitUntilGone"
 
 }

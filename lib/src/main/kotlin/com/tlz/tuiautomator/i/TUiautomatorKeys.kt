@@ -4,7 +4,7 @@ import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorKeyName
 import com.tlz.tuiautomator.i.handlers.TUiautomatorKeysHandler
-import com.tlz.tuiautomator.newTProxy
+import com.tlz.tuiautomator.utils.newTProxy
 
 /**
  * key相关接口.

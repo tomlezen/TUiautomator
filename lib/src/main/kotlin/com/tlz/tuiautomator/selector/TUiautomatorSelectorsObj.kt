@@ -2,11 +2,15 @@ package com.tlz.tuiautomator.selector
 
 import com.google.gson.internal.LinkedTreeMap
 import com.tlz.tuiautomator.*
+import com.tlz.tuiautomator.exceptions.TUiautomatorUIObjNotFoundException
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
 import com.tlz.tuiautomator.selector.fling.TUiFling
 import com.tlz.tuiautomator.selector.model.TUiInfo
 import com.tlz.tuiautomator.selector.scroll.TUiScroll
 import com.tlz.tuiautomator.utils.TRect
+import com.tlz.tuiautomator.utils.toJson
+import com.tlz.tuiautomator.utils.toObj
+import com.tlz.tuiautomator.utils.toTBool
 import kotlin.coroutines.Continuation
 import kotlin.math.roundToInt
 
@@ -23,6 +27,32 @@ class TUiautomatorSelectorsObj(
     override val scroll: TUiScroll = TUiScroll(this)
 
     override val fling: TUiFling = TUiFling(this)
+
+    /**
+     * 等待ui出现或者消失.
+     * @param exists Boolean
+     * @param timeout Int? 等待时间
+     * @return TUiautomatorResult<Boolean>
+     */
+    private suspend fun wait(exists: Boolean = true, timeout: Int? = null): TUiautomatorResult<Boolean> =
+        runTCatching {
+            if (exists) {
+                submit(TUiautomatorMethods.WAIT_FOR_EXISTS, arrayOf((timeout ?: service.config.waitTimeout) * 1000))
+            } else {
+                submit(TUiautomatorMethods.WAIT_UNTIL_GONE, arrayOf((timeout ?: service.config.waitTimeout) * 1000))
+            }.toTBool()
+        }
+
+    /**
+     * 必须等待到ui出现.
+     * @param exists Boolean
+     * @param timeout Int?
+     */
+    private suspend fun mustWait(exists: Boolean = true, timeout: Int? = null) {
+        if (!wait(exists, timeout).getOrThrow()) {
+            throw TUiautomatorUIObjNotFoundException("wait")
+        }
+    }
 
     override suspend fun exists(): TUiautomatorResult<Boolean> =
         runTCatching {
@@ -46,6 +76,19 @@ class TUiautomatorSelectorsObj(
         runTCatching {
             val bounds = bounds().getOrThrow()
             (bounds.left + (bounds.width * xOffset).roundToInt()) to (bounds.top + (bounds.height * yOffset).roundToInt())
+        }
+
+    override suspend fun longClick(duration: Long?, timeout: Int?): TUiautomatorResult<Boolean> =
+        runTCatching {
+            mustWait(timeout = timeout)
+            val (x, y) = center().getOrThrow()
+            service.gestures.longClick(x, y, duration).getOrThrow()
+        }
+
+    override suspend fun dragTo(x: Int, y: Int): TUiautomatorResult<Boolean> =
+        runTCatching {
+            mustWait()
+            submit(TUiautomatorSelectors::dragTo.name, arrayOf(x, y, 100)).toTBool()
         }
 
     override suspend fun submit(methodName: String, args: Array<out Any>?): Any =

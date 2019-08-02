@@ -7,6 +7,7 @@ import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import com.tlz.tuiautomator.selector.TUiSelector
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import com.tlz.tuiautomator.selector.TUiautomatorSelectorsObj
+import com.tlz.tuiautomator.utils.tGson
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,11 +22,12 @@ import java.util.concurrent.TimeUnit
 class TUiautomatorService internal constructor(val config: TUiautomatorConfig) : TUiautomator {
 
     private val okhttp by lazy {
+        val timeout = config.httpTimeout.toLong()
         OkHttpClient.Builder()
-            .callTimeout(config.waitTimeout.toLong(), TimeUnit.SECONDS)
-            .readTimeout(config.waitTimeout.toLong(), TimeUnit.SECONDS)
-            .connectTimeout(config.waitTimeout.toLong(), TimeUnit.SECONDS)
-            .writeTimeout(config.waitTimeout.toLong(), TimeUnit.SECONDS)
+            .callTimeout(timeout, TimeUnit.SECONDS)
+            .readTimeout(timeout, TimeUnit.SECONDS)
+            .connectTimeout(timeout, TimeUnit.SECONDS)
+            .writeTimeout(timeout, TimeUnit.SECONDS)
             .build()
     }
 

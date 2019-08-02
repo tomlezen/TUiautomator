@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator.selector
 
+import android.support.annotation.IntRange
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.selector.fling.TUiFling
 import com.tlz.tuiautomator.selector.model.TUiInfo
@@ -44,5 +45,19 @@ interface TUiautomatorSelectors {
      */
     suspend fun center(xOffset: Float = .5f, yOffset: Float = .5f): TUiautomatorResult<Pair<Int, Int>>
 
-    suspend fun longClick(duration: Int, timeout: Long): TUiautomatorResult<Boolean>
+    /**
+     * 长按.
+     * @param duration Long?
+     * @param timeout Int?
+     * @return TUiautomatorResult<Boolean>
+     */
+    suspend fun longClick(duration: Long? = null, timeout: Int? = null): TUiautomatorResult<Boolean>
+
+    /**
+     * 拖拽（注意x,y为百分比）.
+     * @param x Float
+     * @param y Float
+     * @return TUiautomatorResult<Boolean>
+     */
+    suspend fun dragTo(x: Float, y: Float): TUiautomatorResult<Boolean>
 }

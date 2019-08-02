@@ -7,12 +7,16 @@ package com.tlz.tuiautomator
  * Time: 14:00.
  * @property atxAgentIp String atx-agent服务地址（默认为当前手机ip地址）
  * @property atxAgentPort String atx-agent服务地址端口
- * @property waitTimeout Int 全局寻找元素超时时间（秒）
+ * @property httpTimeout Int 网络请求超时时间（秒）
+ * @property waitTimeout Int 全局寻找元素超时时间（秒），注意不能超过httpTimeout
+ * @property longClickDuration Long 长按时down和up间隔时间（毫秒）
  * @property clickPostDelay Long 点击元素延迟时间（毫秒）
  */
 data class TUiautomatorConfig(
     val atxAgentIp: String = TUiautomator.ip,
     val atxAgentPort: String = TUiautomator.ATX_AGENT_PORT,
+    val httpTimeout: Int = 30,
     val waitTimeout: Int = 20,
+    val longClickDuration: Long = 500,
     val clickPostDelay: Long = 0L
 )

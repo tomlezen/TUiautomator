@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator
 
+import com.tlz.tuiautomator.i.TUiautomatorDevice
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
@@ -15,6 +16,9 @@ import java.net.NetworkInterface
  * Time: 13:57.
  */
 interface TUiautomator {
+
+    /** 设备. */
+    val device: TUiautomatorDevice
 
     /** 按键. */
     val keys: TUiautomatorKeys

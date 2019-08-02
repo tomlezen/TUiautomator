@@ -4,7 +4,7 @@ import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorKeyName
 import com.tlz.tuiautomator.net.request.pressKeyReuest
 import com.tlz.tuiautomator.runTCatching
-import com.tlz.tuiautomator.toTBool
+import com.tlz.tuiautomator.utils.toTBool
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
