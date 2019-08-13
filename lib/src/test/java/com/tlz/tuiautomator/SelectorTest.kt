@@ -37,7 +37,7 @@ class SelectorTest {
     @Test
     fun testDragTo() {
         runBlocking {
-            automator.selector { text = "企鹅电竞" }.dragTo(200f, 400f)
+            automator.selector { text = "企鹅电竞" }.dragTo(.5f, .5f)
         }
     }
 

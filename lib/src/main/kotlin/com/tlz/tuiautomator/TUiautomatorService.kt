@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator
 
+import com.tlz.tuiautomator.i.TUiautomatorDevice
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
 import com.tlz.tuiautomator.i.TUiautomatorToast
@@ -43,6 +44,10 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
     private val apiService by lazy {
         retrofit.create(TUiautomatorApiService::class.java)
     }
+
+    val tools by lazy { TUiautomatorTools(this) }
+
+    override val device: TUiautomatorDevice = TUiautomatorDevice(this)
 
     override val toast: TUiautomatorToast = TUiautomatorToast(this)
 

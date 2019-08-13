@@ -2,7 +2,9 @@ package com.tlz.tuiautomator.utils
 
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
+import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import java.lang.reflect.InvocationHandler
+import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
 /**
@@ -54,3 +56,6 @@ inline fun <reified T> newTProxy(handler: InvocationHandler) =
         arrayOf(T::class.java),
         handler
     ) as T
+
+inline val Method.tMethodName: String
+    get() = getAnnotation(TUiautomatorMethodName::class.java)?.name ?: name

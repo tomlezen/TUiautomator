@@ -19,7 +19,7 @@ import java.net.NetworkInterface
 interface TUiautomator {
 
     /** 设备. */
-//    val device: TUiautomatorDevice
+    val device: TUiautomatorDevice
 
     /** Toast. */
     val toast: TUiautomatorToast

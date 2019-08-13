@@ -1,9 +1,9 @@
 package com.tlz.tuiautomator.i.handlers
 
 import com.tlz.tuiautomator.TUiautomatorService
-import com.tlz.tuiautomator.annotations.TUiautomatorKeyName
 import com.tlz.tuiautomator.net.request.pressKeyReuest
 import com.tlz.tuiautomator.runTCatching
+import com.tlz.tuiautomator.utils.tMethodName
 import com.tlz.tuiautomator.utils.toTBool
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.InvocationHandler
@@ -19,10 +19,7 @@ class TUiautomatorKeysHandler(private val service: TUiautomatorService) : Invoca
     override fun invoke(proxy: Any, method: Method, args: Array<out Any>?): Any =
         runBlocking {
             runTCatching {
-                // 先查找注解
-                val nameAnnotation = method.getAnnotation(TUiautomatorKeyName::class.java)
-                val name = nameAnnotation?.name ?: method.name
-                (service rq pressKeyReuest(name)).toTBool()
+                (service rq pressKeyReuest(method.tMethodName)).toTBool()
             }
         }
 }

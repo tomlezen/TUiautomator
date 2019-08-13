@@ -1,9 +1,12 @@
 package com.tlz.tuiautomator.selector
 
 import com.google.gson.internal.LinkedTreeMap
-import com.tlz.tuiautomator.*
+import com.tlz.tuiautomator.TUiautomatorMethods
+import com.tlz.tuiautomator.TUiautomatorResult
+import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.exceptions.TUiautomatorUIObjNotFoundException
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
+import com.tlz.tuiautomator.runTCatching
 import com.tlz.tuiautomator.selector.fling.TUiFling
 import com.tlz.tuiautomator.selector.model.TUiInfo
 import com.tlz.tuiautomator.selector.scroll.TUiScroll
@@ -88,9 +91,8 @@ class TUiautomatorSelectorsObj(
     override suspend fun dragTo(x: Float, y: Float): TUiautomatorResult<Boolean> =
         runTCatching {
             mustWait()
-//            val (w, h) = service.device.windowSize().getOrThrow()
-//            submit(TUiautomatorSelectors::dragTo.name, arrayOf(w * x, h * y, 100)).toTBool()
-            false
+            val (rX, rY) = service.tools.percXy2RelXy(x, y)
+            submit(TUiautomatorSelectors::dragTo.name, arrayOf(rX, rY, 100)).toTBool()
         }
 
     override suspend fun submit(methodName: String, args: Array<out Any>?): Any =

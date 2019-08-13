@@ -1,7 +1,12 @@
 package com.tlz.tuiautomator.i
 
+import com.tlz.tuiautomator.TUiautomatorMethods
 import com.tlz.tuiautomator.TUiautomatorResult
+import com.tlz.tuiautomator.TUiautomatorService
+import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
+import com.tlz.tuiautomator.i.handlers.TUiautomatorDeviceHandler
 import com.tlz.tuiautomator.net.model.TDeviceInfo
+import com.tlz.tuiautomator.utils.newTProxy
 
 /**
  * 设备信息相关接口.
@@ -15,6 +20,7 @@ interface TUiautomatorDevice {
      * 获取设备信息.
      * @return TUiautomatorResult<TDeviceInfo>
      */
+    @TUiautomatorMethodName(TUiautomatorMethods.Device.INFO)
     suspend fun info(): TUiautomatorResult<TDeviceInfo>
 
     /**
@@ -23,4 +29,8 @@ interface TUiautomatorDevice {
      */
     suspend fun windowSize(): TUiautomatorResult<Pair<Int, Int>>
 
+    companion object {
+        operator fun invoke(service: TUiautomatorService): TUiautomatorDevice =
+            newTProxy(TUiautomatorDeviceHandler(service))
+    }
 }

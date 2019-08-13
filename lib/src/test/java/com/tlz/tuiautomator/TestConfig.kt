@@ -8,8 +8,8 @@ package com.tlz.tuiautomator
  */
 object TestConfig {
 
-    const val ATX_AGENT_SERVER = "172.16.9.32"
-//    const val ATX_AGENT_SERVER = "192.168.199.143"
+//    const val ATX_AGENT_SERVER = "172.16.9.32"
+    const val ATX_AGENT_SERVER = "192.168.199.143"
 
 }
 

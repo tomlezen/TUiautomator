@@ -1,6 +1,7 @@
 package com.tlz.tuiautomator.net
 
 import com.tlz.tuiautomator.net.model.JsonrpcResult
+import com.tlz.tuiautomator.net.model.TDeviceInfo
 import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import retrofit2.Response
 import retrofit2.http.Body
