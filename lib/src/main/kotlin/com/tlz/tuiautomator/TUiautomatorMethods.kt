@@ -24,4 +24,9 @@ object TUiautomatorMethods {
     const val WAIT_FOR_EXISTS = "waitForExists"
     const val WAIT_UNTIL_GONE = "waitUntilGone"
 
+    object Toast{
+        const val SHOW = "makeToast"
+        const val RESET = "clearLastToast"
+        const val GET_MESSAGE = "getLastToast"
+    }
 }

@@ -85,10 +85,12 @@ class TUiautomatorSelectorsObj(
             service.gestures.longClick(x, y, duration).getOrThrow()
         }
 
-    override suspend fun dragTo(x: Int, y: Int): TUiautomatorResult<Boolean> =
+    override suspend fun dragTo(x: Float, y: Float): TUiautomatorResult<Boolean> =
         runTCatching {
             mustWait()
-            submit(TUiautomatorSelectors::dragTo.name, arrayOf(x, y, 100)).toTBool()
+//            val (w, h) = service.device.windowSize().getOrThrow()
+//            submit(TUiautomatorSelectors::dragTo.name, arrayOf(w * x, h * y, 100)).toTBool()
+            false
         }
 
     override suspend fun submit(methodName: String, args: Array<out Any>?): Any =

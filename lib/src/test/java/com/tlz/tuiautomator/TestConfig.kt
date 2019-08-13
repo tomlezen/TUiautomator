@@ -8,7 +8,7 @@ package com.tlz.tuiautomator
  */
 object TestConfig {
 
-    const val ATX_AGENT_SERVER = "172.16.10.216"
+    const val ATX_AGENT_SERVER = "172.16.9.32"
 //    const val ATX_AGENT_SERVER = "192.168.199.143"
 
 }
@@ -23,8 +23,9 @@ fun TUiautomatorResult<Boolean>.handleTestResult() {
     }
 }
 
-fun TUiautomatorResult<Any>.handleTestResult2() {
+fun TUiautomatorResult<Any?>.handleTestResult2() {
     onSuccess {
+        println(it?.toString())
     }
     onFailure {
         it.printStackTrace()

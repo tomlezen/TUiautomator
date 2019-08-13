@@ -2,6 +2,7 @@ package com.tlz.tuiautomator
 
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
+import com.tlz.tuiautomator.i.TUiautomatorToast
 import com.tlz.tuiautomator.net.TUiautomatorApiService
 import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import com.tlz.tuiautomator.selector.TUiSelector
@@ -43,6 +44,8 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
         retrofit.create(TUiautomatorApiService::class.java)
     }
 
+    override val toast: TUiautomatorToast = TUiautomatorToast(this)
+
     override val keys: TUiautomatorKeys = TUiautomatorKeys(this)
 
     override val gestures: TUiautomatorGestures = TUiautomatorGestures(this)
@@ -51,4 +54,6 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
         TUiautomatorSelectorsObj(this, TUiSelector().apply(selector))
 
     suspend infix fun rq(request: JsonrpcRequest) = apiService.jsonrpc(request).unwrap()
+
+    suspend infix fun rqNoUnwrap(request: JsonrpcRequest) = apiService.jsonrpc(request)
 }

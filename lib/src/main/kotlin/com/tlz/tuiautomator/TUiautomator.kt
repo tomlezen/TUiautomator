@@ -3,6 +3,7 @@ package com.tlz.tuiautomator
 import com.tlz.tuiautomator.i.TUiautomatorDevice
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.i.TUiautomatorKeys
+import com.tlz.tuiautomator.i.TUiautomatorToast
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import com.tlz.tuiautomator.selector.TUiSelector
 import java.net.Inet4Address
@@ -18,7 +19,10 @@ import java.net.NetworkInterface
 interface TUiautomator {
 
     /** 设备. */
-    val device: TUiautomatorDevice
+//    val device: TUiautomatorDevice
+
+    /** Toast. */
+    val toast: TUiautomatorToast
 
     /** 按键. */
     val keys: TUiautomatorKeys
@@ -26,7 +30,7 @@ interface TUiautomator {
     /** 手势. */
     val gestures: TUiautomatorGestures
 
-    /** 选择器. */
+    /** ui选择器. */
     fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors
 
     companion object {
