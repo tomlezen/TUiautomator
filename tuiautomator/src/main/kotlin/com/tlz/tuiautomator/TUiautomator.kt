@@ -1,8 +1,8 @@
 package com.tlz.tuiautomator
 
 import com.tlz.tuiautomator.i.*
-import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import com.tlz.tuiautomator.selector.TUiSelector
+import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
@@ -43,6 +43,9 @@ interface TUiautomator {
 
         /** 受保护的app. */
         val PROTECT_APPS = arrayOf("com.github.uiautomator", "com.github.uiautomator.test")
+
+        /** 包名匹配Regex. */
+        val PKG_NAME_REGEX by lazy { "^([a-zA-Z]+[.][a-zA-Z]+)[.]*.*".toRegex(RegexOption.DOT_MATCHES_ALL) }
 
         operator fun invoke(config: TUiautomatorConfig = TUiautomatorConfig()):
                 TUiautomator = TUiautomatorService(config)

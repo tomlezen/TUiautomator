@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
 /**
  * 实现与atx-agent服务器通信.
@@ -39,7 +38,7 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
             .build()
     }
 
-    val apiService by lazy {
+    val apiService: TUiautomatorApiService by lazy {
         retrofit.create(TUiautomatorApiService::class.java)
     }
 

@@ -1,1 +1,1 @@
-include ':app', ':lib', ':tuiautomator'
+include ':app', ':tuiautomator'
