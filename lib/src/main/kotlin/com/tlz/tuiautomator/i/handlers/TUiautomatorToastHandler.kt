@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 
 /**
- * xxx.
  * By tomlezen.
  * Date: 2019-08-13.
  * Time: 17:21.

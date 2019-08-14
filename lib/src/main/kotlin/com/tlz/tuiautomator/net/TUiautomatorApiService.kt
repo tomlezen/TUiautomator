@@ -1,12 +1,11 @@
 package com.tlz.tuiautomator.net
 
 import com.tlz.tuiautomator.net.model.JsonrpcResult
-import com.tlz.tuiautomator.net.model.TDeviceInfo
+import com.tlz.tuiautomator.net.model.SessionResult
+import com.tlz.tuiautomator.net.model.ShellCmdResult
 import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * api服务.
@@ -36,4 +35,29 @@ interface TUiautomatorApiService {
      */
     @GET("/screenshot/0")
     suspend fun screenshot(): Response<Body>
+
+    /**
+     * shell命令.
+     * @param command String
+     * @param timeout Long
+     * @return ShellCmdResult
+     */
+    @POST("/shell")
+    @FormUrlEncoded
+    suspend fun shell(
+        @Field(
+            "command",
+            encoded = true
+        ) command: String, @Field("timeout") timeout: Long
+    ): ShellCmdResult
+
+    /**
+     * 建立session.
+     * @param pkgName String
+     * @param flags Array<out String>
+     * @return SessionResult
+     */
+    @POST("/session/{pkgName}")
+    @FormUrlEncoded
+    suspend fun session(@Path("pkgName") pkgName: String, @Field("flags") vararg flags: String): SessionResult
 }

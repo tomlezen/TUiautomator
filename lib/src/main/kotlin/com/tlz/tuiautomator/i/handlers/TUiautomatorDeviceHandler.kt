@@ -20,6 +20,7 @@ import java.lang.reflect.Method
  */
 class TUiautomatorDeviceHandler(private val service: TUiautomatorService) : InvocationHandler {
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     override fun invoke(proxy: Any?, method: Method, params: Array<out Any?>?): Any? =
         runBlocking {
             val methodName = method.tMethodName

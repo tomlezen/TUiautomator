@@ -23,4 +23,10 @@ class TUiautomatorTools(private val service: TUiautomatorService) {
         }
     }
 
+    /**
+     * 处理超时时间.
+     * @param timeout Long
+     * @return Long
+     */
+    infix fun safetyTimeout(timeout: Long) = min(service.config.httpTimeout * 1000L, timeout)
 }

@@ -1,9 +1,6 @@
 package com.tlz.tuiautomator
 
-import com.tlz.tuiautomator.i.TUiautomatorDevice
-import com.tlz.tuiautomator.i.TUiautomatorGestures
-import com.tlz.tuiautomator.i.TUiautomatorKeys
-import com.tlz.tuiautomator.i.TUiautomatorToast
+import com.tlz.tuiautomator.i.*
 import com.tlz.tuiautomator.net.TUiautomatorApiService
 import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import com.tlz.tuiautomator.selector.TUiSelector
@@ -14,6 +11,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
 /**
  * 实现与atx-agent服务器通信.
@@ -41,7 +39,7 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
             .build()
     }
 
-    private val apiService by lazy {
+    val apiService by lazy {
         retrofit.create(TUiautomatorApiService::class.java)
     }
 
@@ -54,6 +52,10 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
     override val keys: TUiautomatorKeys = TUiautomatorKeys(this)
 
     override val gestures: TUiautomatorGestures = TUiautomatorGestures(this)
+
+    override val shell: TUiautomatorShell = TUiautomatorShell(this)
+
+    override val application: TUiautomatorApplication = TUiautomatorApplication(this)
 
     override fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors =
         TUiautomatorSelectorsObj(this, TUiSelector().apply(selector))
