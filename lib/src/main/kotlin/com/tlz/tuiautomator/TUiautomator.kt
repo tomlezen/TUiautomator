@@ -41,6 +41,9 @@ interface TUiautomator {
         /** atx-agent默认端口. */
         const val ATX_AGENT_PORT = "7912"
 
+        /** 受保护的app. */
+        val PROTECT_APPS = arrayOf("com.github.uiautomator", "com.github.uiautomator.test")
+
         operator fun invoke(config: TUiautomatorConfig = TUiautomatorConfig()):
                 TUiautomator = TUiautomatorService(config)
 

@@ -31,4 +31,11 @@ class ApplicationTest {
             TestConfig.automator.application.stop("com.lxt.app.dev").handleTestResult2()
         }
     }
+
+    @Test
+    fun testStopAll() {
+        runBlocking {
+            TestConfig.automator.application.stopAll().handleTestResult2()
+        }
+    }
 }

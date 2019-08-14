@@ -11,6 +11,7 @@ package com.tlz.tuiautomator
  * @property waitTimeout Int 全局寻找元素超时时间（秒），注意不能超过httpTimeout
  * @property longClickDuration Long 长按时down和up间隔时间（毫秒）
  * @property clickPostDelay Long 点击元素延迟时间（毫秒）
+ * @property selfAppPkgName String 自己应用包名，用于方调用stopAll方法时，保护此包名的app
  */
 data class TUiautomatorConfig(
     val atxAgentIp: String = TUiautomator.ip,
@@ -18,5 +19,6 @@ data class TUiautomatorConfig(
     val httpTimeout: Int = 30,
     val waitTimeout: Int = 20,
     val longClickDuration: Long = 500,
-    val clickPostDelay: Long = 0L
+    val clickPostDelay: Long = 0L,
+    val selfAppPkgName: String = "****"
 )

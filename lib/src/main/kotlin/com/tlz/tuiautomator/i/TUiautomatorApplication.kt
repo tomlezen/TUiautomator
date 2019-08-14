@@ -48,6 +48,13 @@ interface TUiautomatorApplication {
     @TUiautomatorShellCmd("am force-stop %s")
     fun stop(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
 
+    /**
+     * 关闭所有app.
+     * @param excludes Array<out String> 不关闭的app.
+     * @return TUiautomatorResult<Int> 关闭的app个数
+     */
+    fun stopAll(vararg excludes: String): TUiautomatorResult<Int>
+
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorApplication =
             newTProxy(TUiautomatorApplicationHandler(service))
