@@ -5,6 +5,7 @@ import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorFormatParam
 import com.tlz.tuiautomator.annotations.TUiautomatorShellCmd
 import com.tlz.tuiautomator.i.handlers.TUiautomatorApplicationHandler
+import com.tlz.tuiautomator.net.model.AppInfoResult
 import com.tlz.tuiautomator.net.model.SessionResult
 import com.tlz.tuiautomator.utils.newTProxy
 
@@ -15,6 +16,20 @@ import com.tlz.tuiautomator.utils.newTProxy
  * Time: 15:00.
  */
 interface TUiautomatorApplication {
+
+    /**
+     * 当前app.
+     * @return TUiautomatorResult<Pair<String, String>> 包名、activity名.
+     */
+    fun currentApp(): TUiautomatorResult<Pair<String, String>>
+
+    /**
+     * 等待Activity.
+     * @param activity String
+     * @param timeout Long
+     * @return TUiautomatorResult<Boolean>
+     */
+    fun waitActivity(activity: String, timeout: Long = 10_000): TUiautomatorResult<Boolean>
 
     /**
      * 启动应用.
@@ -54,6 +69,29 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<Int> 关闭的app个数
      */
     fun stopAll(vararg excludes: String): TUiautomatorResult<Int>
+
+    /**
+     * 停止并清空app数据.
+     * @param pkgName String
+     * @return TUiautomatorResult<String?>
+     */
+    @TUiautomatorShellCmd("pm clear %s")
+    fun clear(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+
+    /**
+     * 卸载app.
+     * @param pkgName String
+     * @return TUiautomatorResult<String?>
+     */
+    @TUiautomatorShellCmd("pm uninstall %s")
+    fun uninstall(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+
+    /**
+     * 获取应用信息.
+     * @param pkgName String
+     * @return TUiautomatorResult<AppInfoResult>
+     */
+    fun info(pkgName: String): TUiautomatorResult<AppInfoResult>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorApplication =

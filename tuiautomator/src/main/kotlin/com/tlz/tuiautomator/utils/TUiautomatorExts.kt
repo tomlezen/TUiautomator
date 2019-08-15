@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy
 fun Any?.toTBool() = this?.toString()?.toBoolean() ?: false
 
 fun Any?.toTInt() = this?.toString()?.toInt() ?: 0
-fun Any?.toTLong() = this?.toString()?.toLong() ?: 0L
+fun Any?.toTLong(def: Long = 0L) = this?.toString()?.toLong() ?: def
 
 val tGson: Gson = Gson().newBuilder().create()
 

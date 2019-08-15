@@ -12,6 +12,20 @@ import org.junit.Test
 class ApplicationTest {
 
     @Test
+    fun testCurrentApp() {
+        runBlocking {
+            TestConfig.automator.application.currentApp().handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testWaitActivity() {
+        runBlocking {
+            TestConfig.automator.application.waitActivity("com.tlz.tuiautomator.demo.MainActivity").handleTestResult2()
+        }
+    }
+
+    @Test
     fun testStart() {
         runBlocking {
             TestConfig.automator.application.start("com.lxt.app.dev").handleTestResult2()
@@ -36,6 +50,27 @@ class ApplicationTest {
     fun testStopAll() {
         runBlocking {
             TestConfig.automator.application.stopAll().handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testClear() {
+        runBlocking {
+            TestConfig.automator.application.clear("com.tlz.tuiautomator.demo").handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testUninstall() {
+        runBlocking {
+            TestConfig.automator.application.uninstall("com.tlz.tuiautomator.demo").handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testAppInfo() {
+        runBlocking {
+            TestConfig.automator.application.info("com.tlz.tuiautomator.demo").handleTestResult2()
         }
     }
 }

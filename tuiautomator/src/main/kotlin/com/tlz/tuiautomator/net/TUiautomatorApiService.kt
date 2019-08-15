@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator.net
 
+import com.tlz.tuiautomator.net.model.AppInfoResult
 import com.tlz.tuiautomator.net.model.JsonrpcResult
 import com.tlz.tuiautomator.net.model.SessionResult
 import com.tlz.tuiautomator.net.model.ShellCmdResult
@@ -60,4 +61,12 @@ interface TUiautomatorApiService {
     @POST("/session/{pkgName}")
     @FormUrlEncoded
     suspend fun session(@Path("pkgName") pkgName: String, @Field("flags") vararg flags: String): SessionResult
+
+    /**
+     * 获取应用信息。
+     * @param pkgName String
+     * @return AppInfoResult
+     */
+    @GET("/packages/{pkgName}/info")
+    suspend fun appInfo(@Path("pkgName") pkgName: String): AppInfoResult
 }
