@@ -46,6 +46,14 @@ interface TUiautomatorSelectors {
     suspend fun center(xOffset: Float = .5f, yOffset: Float = .5f): TUiautomatorResult<Pair<Int, Int>>
 
     /**
+     * 点击.
+     * @param xOffset Float
+     * @param yOffset Float
+     * @return TUiautomatorResult<Boolean>
+     */
+    suspend fun click(xOffset: Float = .5f, yOffset: Float = .5f): TUiautomatorResult<Boolean>
+
+    /**
      * 长按.
      * @param duration Long?
      * @param timeout Int?

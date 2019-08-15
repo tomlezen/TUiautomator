@@ -3,6 +3,8 @@ package com.tlz.tuiautomator
 import com.tlz.tuiautomator.i.*
 import com.tlz.tuiautomator.selector.TUiSelector
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
+import com.tlz.tuiautomator.step.TUiautomatorStep
+import com.tlz.tuiautomator.step.TUiautomatorStepsTask
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
@@ -35,6 +37,20 @@ interface TUiautomator {
 
     /** ui选择器. */
     fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors
+
+    /**
+     * 创建一个任务.
+     * @param isTestMode Boolean 是否是测试模式. 当为测试模式时非异步运行.
+     * @return TUiautomatorStepsTask
+     */
+    fun createTask(isTestMode: Boolean = false): TUiautomatorStepsTask
+
+    /**
+     * 创建一个步骤.
+     * @param step SuspendFunction1<[@kotlin.ParameterName] TUiautomatorStepsTask, Int?> 返回下一个需要执行的步骤id.
+     * @return TUiautomatorStep
+     */
+    fun createStep(step: suspend (task: TUiautomatorStepsTask) -> Int?): TUiautomatorStep
 
     companion object {
 

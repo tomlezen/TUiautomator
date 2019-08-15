@@ -81,6 +81,12 @@ class TUiautomatorSelectorsObj(
             (bounds.left + (bounds.width * xOffset).roundToInt()) to (bounds.top + (bounds.height * yOffset).roundToInt())
         }
 
+    override suspend fun click(xOffset: Float, yOffset: Float): TUiautomatorResult<Boolean> =
+        runTCatching {
+            val (x, y) = center(xOffset, yOffset).getOrThrow()
+            service.gestures.click(x, y).getOrThrow()
+        }
+
     override suspend fun longClick(duration: Long?, timeout: Int?): TUiautomatorResult<Boolean> =
         runTCatching {
             mustWait(timeout = timeout)

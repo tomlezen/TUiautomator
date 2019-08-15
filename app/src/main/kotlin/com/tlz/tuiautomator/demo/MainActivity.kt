@@ -20,21 +20,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btn_start.setOnClickListener {
-            run()
+            start()
         }
+
+        initTask()
     }
 
-    private fun run() {
-        GlobalScope.async {
-            automator.keys.back()
-                .onFailure {
-                    Logger.e(it, "")
-                }
-                .onSuccess {
-                    runOnUiThread {
-                        Toast.makeText(this@MainActivity, "执行成功", Toast.LENGTH_LONG).show()
-                    }
-                }
-        }
+    private fun initTask() {
+
+    }
+
+    private fun start() {
+
     }
 }

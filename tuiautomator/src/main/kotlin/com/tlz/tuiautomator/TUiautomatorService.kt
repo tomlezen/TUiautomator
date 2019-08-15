@@ -6,6 +6,9 @@ import com.tlz.tuiautomator.net.request.JsonrpcRequest
 import com.tlz.tuiautomator.selector.TUiSelector
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import com.tlz.tuiautomator.selector.TUiautomatorSelectorsObj
+import com.tlz.tuiautomator.step.TUiautomatorStep
+import com.tlz.tuiautomator.step.TUiautomatorStepsTask
+import com.tlz.tuiautomator.step.impl.TUiautomatorStepsTaskImpl
 import com.tlz.tuiautomator.utils.tGson
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -58,6 +61,13 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
 
     override fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors =
         TUiautomatorSelectorsObj(this, TUiSelector().apply(selector))
+
+    override fun createTask(isTestMode: Boolean): TUiautomatorStepsTask = TUiautomatorStepsTaskImpl(isTestMode)
+
+    override fun createStep(step: suspend (task: TUiautomatorStepsTask) -> Int?): TUiautomatorStep =
+        object : TUiautomatorStep(this) {
+            override suspend fun run(task: TUiautomatorStepsTask): Int? = step.invoke(task)
+        }
 
     suspend infix fun rq(request: JsonrpcRequest) = apiService.jsonrpc(request).unwrap()
 
