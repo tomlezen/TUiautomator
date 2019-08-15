@@ -29,8 +29,8 @@ class TUiautomatorApplicationHandler(private val service: TUiautomatorService) :
                 when (method.name) {
                     TUiautomatorApplication::currentApp.name -> {
                         val result = service.shell.execute("dumpsys window windows").getOrThrow()
-                        CURRENT_APP_REGEX.find(result).let {
-                            it?.groupValues?.get(1)!! to it.groupValues[2]
+                        CURRENT_APP_REGEX.find(result)?.let {
+                            it.groupValues[1] to it.groupValues[1] + it.groupValues[2]
                         }
                     }
                     TUiautomatorApplication::waitActivity.name -> {
@@ -92,7 +92,7 @@ class TUiautomatorApplicationHandler(private val service: TUiautomatorService) :
         }
 
     companion object {
-        val CURRENT_APP_REGEX by lazy { "mCurrentFocus=Window\\{.*\\s+([^\\s]+)/([^\\s]+)}".toRegex() }
+        val CURRENT_APP_REGEX by lazy { "ActivityRecord\\{.*\\s+([^\\s]+)/([^\\s]+)".toRegex() }
 
         val PROCESS_APP_REGEX by lazy {
             "([^\\s]+)$".toRegex(
