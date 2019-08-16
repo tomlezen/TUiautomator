@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator
 
+import com.tlz.tuiautomator.selector.TUiautomatorSwipeDirection
 import com.tlz.tuiautomator.step.TUiautomatorStepsTask
 import kotlinx.coroutines.delay
 import org.junit.Test
@@ -28,19 +29,19 @@ class StepsTaskTest {
         })
         task.addStep(1, TestConfig.automator.createStep {
             assert(TestConfig.automator.application.waitActivity("com.tencent.qgame.presentation.activity.MainActivity").getOrThrow())
-            delay(5_000)
+            delay(3_000)
             // 判断下是否有弹窗出现 有弹窗点击取消
             TestConfig.automator.selector { text = "取消" }.click()
-            delay(3_000)
+            delay(2_000)
             TestConfig.automator.selector { text = "取消" }.click()
-            delay(3_000)
+            delay(2_000)
             assert(TestConfig.automator.selector { text = "关注" }.click().getOrThrow())
-            delay(3_000)
+            delay(5_000)
             // 下拉刷新一哈
-            assert(TestConfig.automator.gestures.swipe().getOrThrow())
+            assert(TestConfig.automator.selector { scrollable = true }.swipe(TUiautomatorSwipeDirection.DOWN).getOrThrow())
 //            assert(TestConfig.automator.keys.back().getOrThrow())
 //            delay(5_000)
-            0
+            null
         })
     }
 

@@ -69,4 +69,11 @@ interface TUiautomatorApiService {
      */
     @GET("/packages/{pkgName}/info")
     suspend fun appInfo(@Path("pkgName") pkgName: String): AppInfoResult
+
+    /**
+     * 提取ui结构.
+     * @return JsonrpcResult
+     */
+    @GET("/dump/hierarchy")
+    suspend fun dumpHierarchy(): JsonrpcResult
 }

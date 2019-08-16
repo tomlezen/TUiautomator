@@ -6,6 +6,7 @@ import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import com.tlz.tuiautomator.i.handlers.TUiautomatorDeviceHandler
 import com.tlz.tuiautomator.net.model.TDeviceInfo
+import com.tlz.tuiautomator.net.model.TUiautomatorHierarchy
 import com.tlz.tuiautomator.utils.newTProxy
 
 /**
@@ -28,6 +29,12 @@ interface TUiautomatorDevice {
      * @return TUiautomatorResult<Pair<Int, Int>>
      */
     suspend fun windowSize(): TUiautomatorResult<Pair<Int, Int>>
+
+    /**
+     * 提取整个ui结构.
+     * @return TUiautomatorResult<TUiautomatorHierarchy>
+     */
+    suspend fun dumpHierarchy(): TUiautomatorResult<TUiautomatorHierarchy>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorDevice =

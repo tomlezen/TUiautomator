@@ -11,6 +11,8 @@ import kotlin.math.min
  */
 class TUiautomatorTools(private val service: TUiautomatorService) {
 
+    private val windowSize = IntArray(2)
+
     /**
      * 百分比x，y转真实x, y
      * @return Pair<Int, Int>
@@ -18,9 +20,13 @@ class TUiautomatorTools(private val service: TUiautomatorService) {
     suspend fun percXy2RelXy(x: Float, y: Float): Pair<Int, Int> {
         val rX = min(1f, max(0f, x))
         val rY = min(1f, max(0f, y))
-        return service.device.windowSize().getOrThrow().let {
-            (it.first * rX).toInt() to (it.second * rY).toInt()
+        if (windowSize[0] == 0 || windowSize[1] == 0) {
+            service.device.windowSize().getOrThrow().let {
+                windowSize[0] = it.first
+                windowSize[1] = it.second
+            }
         }
+        return (windowSize[0] * rX).toInt() to (windowSize[1] * rY).toInt()
     }
 
     /**

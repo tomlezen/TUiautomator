@@ -5,7 +5,7 @@ package com.tlz.tuiautomator.utils
  * Date: 2019-07-29.
  * Time: 20:07.
  */
-data class TRect(var left: Int, var top: Int, var right: Int, var bottom: Int) {
+data class TRect(var left: Int = 0, var top: Int = 0, var right: Int = 0, var bottom: Int = 0) {
 
     val width: Int
         get() = right - left

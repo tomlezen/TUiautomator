@@ -94,6 +94,46 @@ class TUiautomatorSelectorsObj(
             service.gestures.longClick(x, y, duration).getOrThrow()
         }
 
+    override suspend fun swipe(direction: TUiautomatorSwipeDirection, steps: Int): TUiautomatorResult<Boolean> =
+        runTCatching {
+            mustWait()
+            val bounds = info().getOrThrow().let { it.visibleBounds ?: it.bounds }
+            when (direction) {
+                TUiautomatorSwipeDirection.LEFT ->
+                    service.gestures.swipe(
+                        bounds.centerX,
+                        bounds.centerY,
+                        bounds.left + 1,
+                        bounds.centerY,
+                        steps
+                    )
+                TUiautomatorSwipeDirection.UP ->
+                    service.gestures.swipe(
+                        bounds.centerX,
+                        bounds.centerY,
+                        bounds.centerX,
+                        bounds.top + 1,
+                        steps
+                    )
+                TUiautomatorSwipeDirection.RIGHT ->
+                    service.gestures.swipe(
+                        bounds.centerX,
+                        bounds.centerY,
+                        bounds.right - 1,
+                        bounds.centerY,
+                        steps
+                    )
+                TUiautomatorSwipeDirection.DOWN ->
+                    service.gestures.swipe(
+                        bounds.centerX,
+                        bounds.centerY,
+                        bounds.centerX,
+                        bounds.bottom - 1,
+                        steps
+                    )
+            }.getOrThrow()
+        }
+
     override suspend fun dragTo(x: Float, y: Float): TUiautomatorResult<Boolean> =
         runTCatching {
             mustWait()

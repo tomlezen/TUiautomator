@@ -7,6 +7,7 @@ import com.tlz.tuiautomator.exceptions.TUiautomatorParamException
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
 import com.tlz.tuiautomator.utils.toTBool
+import com.tlz.tuiautomator.utils.toTFloat
 import com.tlz.tuiautomator.utils.toTInt
 import com.tlz.tuiautomator.utils.toTLong
 import kotlinx.coroutines.delay
@@ -75,6 +76,17 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                         return@runTCatching proxy.click(x, y).toTBool()
                     }
                     TUiautomatorMethods.CLICK -> delay(service.config.clickPostDelay)
+                    TUiautomatorMethods.SWIPE -> {
+                        // 这里需要处理下半分比参数
+                        if (method.name == TUiautomatorGestures::swipeByPercent.name) {
+                            val (sx, sy) = service.tools.percXy2RelXy(params[0].toTFloat(), params[1].toTFloat())
+                            params[0] = sx
+                            params[1] = sy
+                            val (ex, ey) = service.tools.percXy2RelXy(params[2].toTFloat(), params[3].toTFloat())
+                            params[2] = ex
+                            params[3] = ey
+                        }
+                    }
                     else -> {
 
                     }

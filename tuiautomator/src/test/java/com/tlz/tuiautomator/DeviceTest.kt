@@ -13,9 +13,16 @@ class DeviceTest {
     private val automator = TUiautomator(TUiautomatorConfig(atxAgentIp = TestConfig.ATX_AGENT_SERVER))
 
     @Test
-    fun testExist() {
+    fun testInfo() {
         runBlocking {
             automator.device.info().handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testDumpHierarchy() {
+        runBlocking {
+            automator.device.dumpHierarchy().handleTestResult2()
         }
     }
 

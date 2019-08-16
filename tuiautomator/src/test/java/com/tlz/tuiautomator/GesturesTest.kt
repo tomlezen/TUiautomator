@@ -37,7 +37,14 @@ class GesturesTest {
     @Test
     fun swipe() {
         runBlocking {
-            automator.gestures.swipe(300, 300, 300, 600, 20).handleTestResult()
+            automator.gestures.swipe(300, 600, 300, 300, 20).handleTestResult()
+        }
+    }
+
+    @Test
+    fun swipeByPercent() {
+        runBlocking {
+            automator.gestures.swipeByPercent(0.6f, .9f, 0.6f, 0.2f, 20).handleTestResult()
         }
     }
 

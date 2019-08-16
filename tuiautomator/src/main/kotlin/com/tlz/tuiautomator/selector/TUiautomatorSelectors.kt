@@ -62,6 +62,14 @@ interface TUiautomatorSelectors {
     suspend fun longClick(duration: Long? = null, timeout: Int? = null): TUiautomatorResult<Boolean>
 
     /**
+     * 扫.
+     * @param direction TUiautomatorSwipeDirection 方向.
+     * @param steps Int
+     * @return TUiautomatorResult<Boolean>
+     */
+    suspend fun swipe(direction: TUiautomatorSwipeDirection, steps: Int = 10): TUiautomatorResult<Boolean>
+
+    /**
      * 拖拽（注意x,y为百分比）.
      * @param x Float
      * @param y Float

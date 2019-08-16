@@ -14,7 +14,7 @@ data class TUiInfo(
     val packageName: String?,
     val resourceName: String?,
     val test: String?,
-    val visibleBounds: Bounds,
+    val visibleBounds: Bounds?,
     val checkable: Boolean,
     val checked: Boolean,
     val clickable: Boolean,
@@ -31,6 +31,14 @@ data class TUiInfo(
         val left: Int,
         val right: Int,
         val top: Int
-    )
+    ) {
+
+        val centerX: Int
+            get() = (left + right) / 2
+
+        val centerY: Int
+            get() = (top + bottom) / 2
+
+    }
 
 }

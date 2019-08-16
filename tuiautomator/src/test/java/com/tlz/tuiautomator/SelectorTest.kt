@@ -1,5 +1,6 @@
 package com.tlz.tuiautomator
 
+import com.tlz.tuiautomator.selector.TUiautomatorSwipeDirection
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
@@ -31,6 +32,20 @@ class SelectorTest {
         runBlocking {
             automator.selector { text = "开发者选项" }.longClick().handleTestResult2()
             automator.selector { text = "测试" }.longClick().handleTestResult2()
+        }
+    }
+
+    @Test
+    fun testSwipeUp() {
+        runBlocking {
+            automator.selector { scrollable = true }.swipe(TUiautomatorSwipeDirection.UP)
+        }
+    }
+
+    @Test
+    fun testSwipeDown() {
+        runBlocking {
+            automator.selector { scrollable = true }.swipe(TUiautomatorSwipeDirection.DOWN)
         }
     }
 

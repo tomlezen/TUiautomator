@@ -56,7 +56,19 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 4): TUiautomatorResult<Boolean>
+    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 10): TUiautomatorResult<Boolean>
+
+    /**
+     * 滑，扫(半分比).
+     * @param sx Float
+     * @param sy Float
+     * @param ex Float
+     * @param ey Float
+     * @param steps Int 每步为5ms
+     * @return TUiautomatorResult<Boolean>
+     */
+    @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
+    fun swipeByPercent(sx: Float, sy: Float, ex: Float, ey: Float, steps: Int = 10): TUiautomatorResult<Boolean>
 
     /**
      * 滑动点到点.
