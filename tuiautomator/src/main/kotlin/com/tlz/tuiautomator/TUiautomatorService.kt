@@ -10,6 +10,8 @@ import com.tlz.tuiautomator.step.TUiautomatorStep
 import com.tlz.tuiautomator.step.TUiautomatorStepsTask
 import com.tlz.tuiautomator.step.impl.TUiautomatorStepsTaskImpl
 import com.tlz.tuiautomator.utils.tGson
+import com.tlz.tuiautomator.xpath.TUiautomatorXpath
+import com.tlz.tuiautomator.xpath.TUiautomatorXpathObj
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -61,6 +63,8 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
 
     override fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors =
         TUiautomatorSelectorsObj(this, TUiSelector().apply(selector))
+
+    override fun xpath(xpath: String): TUiautomatorXpath = TUiautomatorXpathObj(this, xpath)
 
     override fun createTask(isTestMode: Boolean): TUiautomatorStepsTask = TUiautomatorStepsTaskImpl(isTestMode)
 

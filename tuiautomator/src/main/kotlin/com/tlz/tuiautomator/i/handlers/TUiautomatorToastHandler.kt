@@ -5,6 +5,7 @@ import com.tlz.tuiautomator.TUiautomatorService
 import com.tlz.tuiautomator.exceptions.TUiautomatorParamException
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
 import com.tlz.tuiautomator.runTCatching
+import com.tlz.tuiautomator.utils.filterT
 import com.tlz.tuiautomator.utils.tMethodName
 import com.tlz.tuiautomator.utils.toTBool
 import com.tlz.tuiautomator.utils.toTLong
@@ -45,7 +46,7 @@ class TUiautomatorToastHandler(private val service: TUiautomatorService) : Invoc
                         return@runTCatching args.getOrNull(2)
                     }
                 }
-                (service rq jsonrpcRequest(method = methodName, params = args)).toTBool()
+                (service rq jsonrpcRequest(method = methodName, params = args?.filterT())).toTBool()
             }
         }
 }

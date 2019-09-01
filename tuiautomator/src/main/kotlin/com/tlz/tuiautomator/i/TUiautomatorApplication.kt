@@ -21,7 +21,7 @@ interface TUiautomatorApplication {
      * 当前app.
      * @return TUiautomatorResult<Pair<String, String>> 包名、activity名.
      */
-    fun currentApp(): TUiautomatorResult<Pair<String, String>>
+    suspend fun currentApp(): TUiautomatorResult<Pair<String, String>>
 
     /**
      * 等待Activity.
@@ -29,14 +29,14 @@ interface TUiautomatorApplication {
      * @param timeout Long
      * @return TUiautomatorResult<Boolean>
      */
-    fun waitActivity(activity: String, timeout: Long = 10_000): TUiautomatorResult<Boolean>
+    suspend fun waitActivity(activity: String, timeout: Long = 10_000): TUiautomatorResult<Boolean>
 
     /**
      * 启动应用.
      * @param pkgName String
      * @return TUiautomatorResult<SessionResult>
      */
-    fun start(pkgName: String): TUiautomatorResult<SessionResult>
+    suspend fun start(pkgName: String): TUiautomatorResult<SessionResult>
 
     /**
      * 使用monkey命令启动app.
@@ -44,7 +44,7 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorShellCmd("monkey -p %s -c android.intent.category.LAUNCHER 1")
-    fun startWithMonkey(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+    suspend fun startWithMonkey(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
 
     /**
      * 打开Activity.
@@ -53,7 +53,7 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorShellCmd("am start -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -W -n %s%2F%s")
-    fun startActivity(@TUiautomatorFormatParam pkgName: String, @TUiautomatorFormatParam activity: String): TUiautomatorResult<String?>
+    suspend fun startActivity(@TUiautomatorFormatParam pkgName: String, @TUiautomatorFormatParam activity: String): TUiautomatorResult<String?>
 
     /**
      * 关闭app.
@@ -61,14 +61,14 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorShellCmd("am force-stop %s")
-    fun stop(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+    suspend fun stop(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
 
     /**
      * 关闭所有app.
      * @param excludes Array<out String> 不关闭的app.
      * @return TUiautomatorResult<Int> 关闭的app个数
      */
-    fun stopAll(vararg excludes: String): TUiautomatorResult<Int>
+    suspend fun stopAll(vararg excludes: String): TUiautomatorResult<Int>
 
     /**
      * 停止并清空app数据.
@@ -76,7 +76,7 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorShellCmd("pm clear %s")
-    fun clear(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+    suspend fun clear(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
 
     /**
      * 卸载app.
@@ -84,14 +84,14 @@ interface TUiautomatorApplication {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorShellCmd("pm uninstall %s")
-    fun uninstall(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
+    suspend fun uninstall(@TUiautomatorFormatParam pkgName: String): TUiautomatorResult<String?>
 
     /**
      * 获取应用信息.
      * @param pkgName String
      * @return TUiautomatorResult<AppInfoResult>
      */
-    fun info(pkgName: String): TUiautomatorResult<AppInfoResult>
+    suspend fun info(pkgName: String): TUiautomatorResult<AppInfoResult>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorApplication =

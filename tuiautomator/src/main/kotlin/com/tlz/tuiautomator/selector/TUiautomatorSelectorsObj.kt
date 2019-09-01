@@ -10,11 +10,7 @@ import com.tlz.tuiautomator.runTCatching
 import com.tlz.tuiautomator.selector.fling.TUiFling
 import com.tlz.tuiautomator.selector.model.TUiInfo
 import com.tlz.tuiautomator.selector.scroll.TUiScroll
-import com.tlz.tuiautomator.utils.TRect
-import com.tlz.tuiautomator.utils.toJson
-import com.tlz.tuiautomator.utils.toObj
-import com.tlz.tuiautomator.utils.toTBool
-import kotlin.coroutines.Continuation
+import com.tlz.tuiautomator.utils.*
 import kotlin.math.roundToInt
 
 /**
@@ -150,5 +146,6 @@ class TUiautomatorSelectorsObj(
                     0,
                     selector.calculateMask()
                 )
-            }.filter { it !is Continuation<*> }))
+            }.filterT()
+        ))
 }

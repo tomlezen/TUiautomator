@@ -6,6 +6,7 @@ import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
+import kotlin.coroutines.Continuation
 
 /**
  * By tomlezen.
@@ -60,3 +61,7 @@ inline fun <reified T> newTProxy(handler: InvocationHandler) =
 
 inline val Method.tMethodName: String
     get() = getAnnotation(TUiautomatorMethodName::class.java)?.name ?: name
+
+/** 过滤掉协程参数. */
+fun <T> Iterable<T>.filterT() = this.filter { it !is Continuation<*> }
+fun <T> Array<T>.filterT() = this.filter { it !is Continuation<*> }

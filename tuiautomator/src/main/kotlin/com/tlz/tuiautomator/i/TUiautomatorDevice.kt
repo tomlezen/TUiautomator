@@ -32,9 +32,9 @@ interface TUiautomatorDevice {
 
     /**
      * 提取整个ui结构.
-     * @return TUiautomatorResult<TUiautomatorHierarchy>
+     * @return TUiautomatorResult<String>
      */
-    suspend fun dumpHierarchy(): TUiautomatorResult<TUiautomatorHierarchy>
+    suspend fun dumpHierarchy(): TUiautomatorResult<String>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorDevice =

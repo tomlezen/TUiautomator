@@ -40,17 +40,18 @@ class TUiautomatorDeviceHandler(private val service: TUiautomatorService) : Invo
                     }
                     TUiautomatorDevice::dumpHierarchy.name -> {
                         val result = service.apiService.dumpHierarchy().unwrap().toString()
-                        val reader = SAXReader()
-                        val document = reader.read(ByteArrayInputStream(result.toByteArray()))
-                        val rootEle = document.rootElement
-                        val nodes = mutableListOf<TUiautomatorHierarchy.Node>()
-                        if (rootEle.name == "hierarchy") {
-                            val it = rootEle.elementIterator()
-                            while (it.hasNext()) {
-                                parseNode(it.next(), nodes)
-                            }
-                        }
-                        TUiautomatorHierarchy(nodes)
+                        result
+//                        val reader = SAXReader()
+//                        val document = reader.read(ByteArrayInputStream(result.toByteArray()))
+//                        val rootEle = document.rootElement
+//                        val nodes = mutableListOf<TUiautomatorHierarchy.Node>()
+//                        if (rootEle.name == "hierarchy") {
+//                            val it = rootEle.elementIterator()
+//                            while (it.hasNext()) {
+//                                parseNode(it.next(), nodes)
+//                            }
+//                        }
+//                        TUiautomatorHierarchy(nodes)
                     }
                     else -> null
                 }
@@ -62,50 +63,50 @@ class TUiautomatorDeviceHandler(private val service: TUiautomatorService) : Invo
      * @param ele Element
      * @param nodes MutableList<Node>
      */
-    private fun parseNode(
-        ele: Element,
-        nodes: MutableList<TUiautomatorHierarchy.Node>
-    ) {
-        val children = mutableListOf<TUiautomatorHierarchy.Node>()
-        val it = ele.elementIterator()
-        while (it.hasNext()) {
-            parseNode(it.next(), children)
-        }
-        val node = TUiautomatorHierarchy.Node(
-            ele.attribute("index").value.toInt(),
-            ele.attribute("text").value.toString(),
-            ele.attribute("resource-id").value.toString(),
-            ele.attribute("class").value.toString(),
-            ele.attribute("package").value.toString(),
-            ele.attribute("content-desc").value.toString(),
-            ele.attribute("checkable").value.toTBool(),
-            ele.attribute("checked").value.toTBool(),
-            ele.attribute("clickable").value.toTBool(),
-            ele.attribute("enabled").value.toTBool(),
-            ele.attribute("focusable").value.toTBool(),
-            ele.attribute("focused").value.toTBool(),
-            ele.attribute("scrollable").value.toTBool(),
-            ele.attribute("long-clickable").value.toTBool(),
-            ele.attribute("password").value.toTBool(),
-            ele.attribute("selected").value.toTBool(),
-            ele.attribute("visible-to-user").value.toTBool(),
-            ele.attribute("bounds").value.toString().let {
-                TRect().apply {
-                    BOUND_REGEX.findAll(it).forEachIndexed { index, matchResult ->
-                        if (index == 0) {
-                            left = matchResult.groupValues[1].toInt()
-                            top = matchResult.groupValues[2].toInt()
-                        } else if (index == 1) {
-                            right = matchResult.groupValues[1].toInt()
-                            bottom = matchResult.groupValues[2].toInt()
-                        }
-                    }
-                }
-            },
-            children
-        )
-        nodes += node
-    }
+//    private fun parseNode(
+//        ele: Element,
+//        nodes: MutableList<TUiautomatorHierarchy.Node>
+//    ) {
+//        val children = mutableListOf<TUiautomatorHierarchy.Node>()
+//        val it = ele.elementIterator()
+//        while (it.hasNext()) {
+//            parseNode(it.next(), children)
+//        }
+//        val node = TUiautomatorHierarchy.Node(
+//            ele.attribute("index").value.toInt(),
+//            ele.attribute("text").value.toString(),
+//            ele.attribute("resource-id").value.toString(),
+//            ele.attribute("class").value.toString(),
+//            ele.attribute("package").value.toString(),
+//            ele.attribute("content-desc").value.toString(),
+//            ele.attribute("checkable").value.toTBool(),
+//            ele.attribute("checked").value.toTBool(),
+//            ele.attribute("clickable").value.toTBool(),
+//            ele.attribute("enabled").value.toTBool(),
+//            ele.attribute("focusable").value.toTBool(),
+//            ele.attribute("focused").value.toTBool(),
+//            ele.attribute("scrollable").value.toTBool(),
+//            ele.attribute("long-clickable").value.toTBool(),
+//            ele.attribute("password").value.toTBool(),
+//            ele.attribute("selected").value.toTBool(),
+//            ele.attribute("visible-to-user").value.toTBool(),
+//            ele.attribute("bounds").value.toString().let {
+//                TRect().apply {
+//                    BOUND_REGEX.findAll(it).forEachIndexed { index, matchResult ->
+//                        if (index == 0) {
+//                            left = matchResult.groupValues[1].toInt()
+//                            top = matchResult.groupValues[2].toInt()
+//                        } else if (index == 1) {
+//                            right = matchResult.groupValues[1].toInt()
+//                            bottom = matchResult.groupValues[2].toInt()
+//                        }
+//                    }
+//                }
+//            },
+//            children
+//        )
+//        nodes += node
+//    }
 
     companion object {
         val BOUND_REGEX by lazy { "\\[([0-9]+),([0-9]+)]".toRegex() }

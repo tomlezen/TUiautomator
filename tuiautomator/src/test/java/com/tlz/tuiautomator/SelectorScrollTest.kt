@@ -46,7 +46,16 @@ class SelectorScrollTest {
         runBlocking {
             automator.selector {
                 scrollable = true
-            }.scroll.scrollForward(steps = 2).handleTestResult()
+            }.scroll.scrollForward().handleTestResult()
+        }
+    }
+
+    @Test
+    fun testScrollBackward() {
+        runBlocking {
+            automator.selector {
+                scrollable = true
+            }.scroll.scrollBackward().handleTestResult()
         }
     }
 

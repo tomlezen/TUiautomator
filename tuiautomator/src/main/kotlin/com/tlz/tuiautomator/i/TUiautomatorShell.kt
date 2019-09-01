@@ -19,7 +19,7 @@ interface TUiautomatorShell {
      * @param timeout Long
      * @return TUiautomatorResult<String>
      */
-    fun execute(cmd: String, timeout: Long = 60_000): TUiautomatorResult<String>
+    suspend fun execute(cmd: String, timeout: Long = 60_000): TUiautomatorResult<String>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorShell =

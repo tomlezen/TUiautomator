@@ -6,10 +6,7 @@ import com.tlz.tuiautomator.annotations.TUiautomatorTouchEventType
 import com.tlz.tuiautomator.exceptions.TUiautomatorParamException
 import com.tlz.tuiautomator.i.TUiautomatorGestures
 import com.tlz.tuiautomator.net.request.jsonrpcRequest
-import com.tlz.tuiautomator.utils.toTBool
-import com.tlz.tuiautomator.utils.toTFloat
-import com.tlz.tuiautomator.utils.toTInt
-import com.tlz.tuiautomator.utils.toTLong
+import com.tlz.tuiautomator.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import java.lang.reflect.InvocationHandler
@@ -91,7 +88,7 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
 
                     }
                 }
-                (service rq jsonrpcRequest(method = methodName, params = params.toTypedArray())).toTBool()
+                (service rq jsonrpcRequest(method = methodName, params = params.filterT())).toTBool()
             }
         }
 }

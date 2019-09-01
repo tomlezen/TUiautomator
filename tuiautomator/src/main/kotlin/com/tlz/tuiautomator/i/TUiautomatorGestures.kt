@@ -24,7 +24,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.CLICK)
-    fun click(x: Int, y: Int): TUiautomatorResult<Boolean>
+    suspend fun click(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     /**
      * 长按.
@@ -34,7 +34,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.LONG_CLICK)
-    fun longClick(x: Int, y: Int, duration: Long? = null): TUiautomatorResult<Boolean>
+    suspend fun longClick(x: Int, y: Int, duration: Long? = null): TUiautomatorResult<Boolean>
 
     /**
      * 双击.
@@ -44,7 +44,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.DOUBLE_CLICK)
-    fun doubleClick(x: Int, y: Int, delay: Long = 100): TUiautomatorResult<Boolean>
+    suspend fun doubleClick(x: Int, y: Int, delay: Long = 100): TUiautomatorResult<Boolean>
 
     /**
      * 滑，扫.
@@ -56,7 +56,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 10): TUiautomatorResult<Boolean>
+    suspend fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 10): TUiautomatorResult<Boolean>
 
     /**
      * 滑，扫(半分比).
@@ -68,7 +68,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipeByPercent(sx: Float, sy: Float, ex: Float, ey: Float, steps: Int = 10): TUiautomatorResult<Boolean>
+    suspend fun swipeByPercent(sx: Float, sy: Float, ex: Float, ey: Float, steps: Int = 10): TUiautomatorResult<Boolean>
 
     /**
      * 滑动点到点.
@@ -78,7 +78,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    fun swipe(vararg p: Pair<Int, Int>, duration: Long = 50): TUiautomatorResult<Boolean>
+    suspend fun swipe(vararg p: Pair<Int, Int>, duration: Long = 50): TUiautomatorResult<Boolean>
 
     /**
      * 拖拽.
@@ -90,7 +90,7 @@ interface TUiautomatorGestures {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.DRAG)
-    fun drag(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 50): TUiautomatorResult<Boolean>
+    suspend fun drag(sx: Int, sy: Int, ex: Int, ey: Int, duration: Long = 50): TUiautomatorResult<Boolean>
 
     /**
      * 按下操作.
@@ -100,7 +100,7 @@ interface TUiautomatorGestures {
      */
     @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
     @TUiautomatorTouchEventType(0)
-    fun touchDown(x: Int, y: Int): TUiautomatorResult<Boolean>
+    suspend fun touchDown(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     /**
      * 手势移动.
@@ -110,7 +110,7 @@ interface TUiautomatorGestures {
      */
     @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
     @TUiautomatorTouchEventType(2)
-    fun touchMove(x: Int, y: Int): TUiautomatorResult<Boolean>
+    suspend fun touchMove(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     /**
      * 手势抬起.
@@ -120,7 +120,7 @@ interface TUiautomatorGestures {
      */
     @TUiautomatorMethodName(TUiautomatorMethods.INJECT_INPUT_EVENT)
     @TUiautomatorTouchEventType(1)
-    fun touchUp(x: Int, y: Int): TUiautomatorResult<Boolean>
+    suspend fun touchUp(x: Int, y: Int): TUiautomatorResult<Boolean>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorGestures =

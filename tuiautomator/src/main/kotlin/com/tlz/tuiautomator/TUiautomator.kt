@@ -5,6 +5,7 @@ import com.tlz.tuiautomator.selector.TUiSelector
 import com.tlz.tuiautomator.selector.TUiautomatorSelectors
 import com.tlz.tuiautomator.step.TUiautomatorStep
 import com.tlz.tuiautomator.step.TUiautomatorStepsTask
+import com.tlz.tuiautomator.xpath.TUiautomatorXpath
 import java.net.Inet4Address
 import java.net.NetworkInterface
 
@@ -35,8 +36,19 @@ interface TUiautomator {
     /** 应用. */
     val application: TUiautomatorApplication
 
-    /** ui选择器. */
+    /**
+     * ui选择器.
+     * @param selector [@kotlin.ExtensionFunctionType] Function1<TUiSelector, Unit>
+     * @return TUiautomatorSelectors
+     */
     fun selector(selector: TUiSelector.() -> Unit): TUiautomatorSelectors
+
+    /**
+     * xpath选择.
+     * @param xpath String
+     * @return TUiautomatorXpath
+     */
+    fun xpath(xpath: String): TUiautomatorXpath
 
     /**
      * 创建一个任务.

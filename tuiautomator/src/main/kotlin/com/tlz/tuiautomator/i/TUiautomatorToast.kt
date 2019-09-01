@@ -22,7 +22,7 @@ interface TUiautomatorToast {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorKeyName(TUiautomatorMethods.Toast.SHOW)
-    fun show(message: String, duration: Long = 2000): TUiautomatorResult<Boolean>
+    suspend fun show(message: String, duration: Long = 2000): TUiautomatorResult<Boolean>
 
     /**
      * 获取显示的Toast信息.
@@ -33,7 +33,7 @@ interface TUiautomatorToast {
      * @return TUiautomatorResult<String?>
      */
     @TUiautomatorKeyName(TUiautomatorMethods.Toast.GET_MESSAGE)
-    fun getMessage(
+    suspend fun getMessage(
         waitTimeout: Long = 10_000,
         cacheTimeout: Long = 10_000,
         default: String? = null
@@ -44,7 +44,7 @@ interface TUiautomatorToast {
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorKeyName(TUiautomatorMethods.Toast.RESET)
-    fun reset(): TUiautomatorResult<Boolean>
+    suspend fun reset(): TUiautomatorResult<Boolean>
 
     companion object {
         operator fun invoke(service: TUiautomatorService): TUiautomatorToast =
