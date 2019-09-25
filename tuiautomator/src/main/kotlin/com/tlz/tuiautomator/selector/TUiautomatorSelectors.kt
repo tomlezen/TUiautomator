@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator.selector
 
-import android.support.annotation.IntRange
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.selector.fling.TUiFling
 import com.tlz.tuiautomator.selector.model.TUiInfo
@@ -18,6 +17,14 @@ interface TUiautomatorSelectors {
     val scroll: TUiScroll
 
     val fling: TUiFling
+
+    /**
+     * 等待ui出现.
+     * @param exists Boolean
+     * @param timeout Int?
+     * @return TUiautomatorResult<Boolean>
+     */
+    suspend fun wait(exists: Boolean = true, timeout: Int? = null): TUiautomatorResult<Boolean>
 
     /**
      * 是否存在.

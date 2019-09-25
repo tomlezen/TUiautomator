@@ -52,10 +52,9 @@ interface TUiautomator {
 
     /**
      * 创建一个任务.
-     * @param isTestMode Boolean 是否是测试模式. 当为测试模式时非异步运行.
      * @return TUiautomatorStepsTask
      */
-    fun createTask(isTestMode: Boolean = false): TUiautomatorStepsTask
+    fun createTask(): TUiautomatorStepsTask
 
     /**
      * 创建一个步骤.
@@ -73,7 +72,10 @@ interface TUiautomator {
         val PROTECT_APPS = arrayOf("com.github.uiautomator", "com.github.uiautomator.test")
 
         /** 包名匹配Regex. */
-        val PKG_NAME_REGEX by lazy { "^([a-zA-Z]+[.][a-zA-Z]+)[.]*.*".toRegex(RegexOption.DOT_MATCHES_ALL) }
+        val PKG_NAME_REGEX by lazy(LazyThreadSafetyMode.NONE) { "^([a-zA-Z]+[.][a-zA-Z]+)[.]*.*".toRegex(RegexOption.DOT_MATCHES_ALL) }
+
+        /** 数字匹配Regex. */
+        val NUMBER_REGEX by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
 
         operator fun invoke(config: TUiautomatorConfig = TUiautomatorConfig()):
                 TUiautomator = TUiautomatorService(config)

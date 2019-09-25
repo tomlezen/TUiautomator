@@ -1,6 +1,7 @@
 package com.tlz.tuiautomator.xpath
 
 import com.tlz.tuiautomator.TUiautomatorResult
+import com.tlz.tuiautomator.utils.TRect
 
 /**
  * Xpath.
@@ -22,4 +23,8 @@ interface TUiautomatorXpath {
     suspend fun click(): TUiautomatorResult<Boolean>
 
     suspend fun text(): TUiautomatorResult<String?>
+
+    suspend fun bounds(): TUiautomatorResult<TRect>
+
+    suspend fun center(xOffset: Float = .5f, yOffset: Float = .5f): TUiautomatorResult<Pair<Int, Int>>
 }

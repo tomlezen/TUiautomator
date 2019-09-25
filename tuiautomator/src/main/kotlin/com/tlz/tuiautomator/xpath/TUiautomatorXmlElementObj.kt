@@ -1,6 +1,6 @@
 package com.tlz.tuiautomator.xpath
 
-import com.sun.org.apache.xerces.internal.dom.DeferredAttrNSImpl
+import com.sun.org.apache.xerces.internal.impl.xs.opti.AttrImpl
 import com.tlz.tuiautomator.TUiautomator
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.i.handlers.TUiautomatorDeviceHandler
@@ -59,8 +59,8 @@ class TUiautomatorXmlElementObj(
      */
     override fun attribute(name: String): String =
         node.attributes.let {
-            (0 until it.length).map { index -> it.item(index) as DeferredAttrNSImpl }
-                .find { n -> n.name == name }?.value.toString()
+            (0 until it.length).map { index -> it.item(index)}
+                .find { n -> n.localName == name }?.textContent.toString()
         }
 
     override val children: List<TUiautomatorXmlElement> by lazy {

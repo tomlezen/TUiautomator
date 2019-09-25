@@ -6,6 +6,9 @@ import com.tlz.tuiautomator.annotations.TUiautomatorMethodName
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.coroutines.Continuation
 
 /**
@@ -64,4 +67,31 @@ inline val Method.tMethodName: String
 
 /** 过滤掉协程参数. */
 fun <T> Iterable<T>.filterT() = this.filter { it !is Continuation<*> }
+
 fun <T> Array<T>.filterT() = this.filter { it !is Continuation<*> }
+
+@UseExperimental(ExperimentalContracts::class)
+inline fun Boolean?.yes(block: () -> Unit): Boolean? {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+    if (this == true) block()
+    return this
+}
+
+@UseExperimental(ExperimentalContracts::class)
+inline fun Boolean?.no(block: () -> Unit): Boolean? {
+    contract {
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+    }
+    if (this != true) block()
+    return this
+}
+
+/**
+ * 断言.
+ * @receiver Boolean
+ */
+fun Boolean.assert() {
+    assert(this)
+}

@@ -33,17 +33,7 @@ subprojects {
     }
 
     apply from: '../core_dependencies.gradle'
-//    apply from: '../test_dependencies.gradle'
     apply from: '../repositories.gradle'
-
-//    android {
-//        sourceSets {
-//            main {
-//                java.srcDirs += ['src', 'main', 'java'].join('/')
-//                java.srcDirs += ['src', 'main', 'kotlin'].join('/')
-//            }
-//        }
-//    }
 }
 
 task clean(type: Delete) {

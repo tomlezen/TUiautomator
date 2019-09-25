@@ -1,7 +1,5 @@
 package com.tlz.tuiautomator.step
 
-import org.jetbrains.annotations.TestOnly
-
 /**
  * 步骤容器，用于对步骤的管理.
  * By tomlezen.
@@ -12,6 +10,14 @@ interface TUiautomatorStepsTask {
 
     /** 当前任务是否运行. */
     val isRunning: Boolean
+
+    /**
+     * 运行状态回调.
+     * (注意：这里回调实在异步线程)
+     * @param block Function1<[@kotlin.ParameterName] Boolean, Unit>
+     * @param isAdd Boolean
+     */
+    fun runningStateCallback(block: (running: Boolean) -> Unit, isAdd: Boolean)
 
     /**
      * 添加步骤.

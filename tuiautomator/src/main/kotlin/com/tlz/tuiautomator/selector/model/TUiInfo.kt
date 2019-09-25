@@ -13,7 +13,7 @@ data class TUiInfo(
     val contentDescription: String?,
     val packageName: String?,
     val resourceName: String?,
-    val test: String?,
+    val text: String?,
     val visibleBounds: Bounds?,
     val checkable: Boolean,
     val checked: Boolean,

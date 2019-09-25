@@ -74,7 +74,7 @@ class TUiautomatorGesturesHandler(private val service: TUiautomatorService) : In
                     }
                     TUiautomatorMethods.CLICK -> delay(service.config.clickPostDelay)
                     TUiautomatorMethods.SWIPE -> {
-                        // 这里需要处理下半分比参数
+                        // 这里需要处理下百分比参数
                         if (method.name == TUiautomatorGestures::swipeByPercent.name) {
                             val (sx, sy) = service.tools.percXy2RelXy(params[0].toTFloat(), params[1].toTFloat())
                             params[0] = sx

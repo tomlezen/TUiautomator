@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
  */
 class TUiautomatorService internal constructor(val config: TUiautomatorConfig) : TUiautomator {
 
-    private val okhttp by lazy {
+    private val okhttp by lazy(LazyThreadSafetyMode.NONE) {
         val timeout = config.httpTimeout.toLong()
         OkHttpClient.Builder()
             .callTimeout(timeout, TimeUnit.SECONDS)
@@ -35,7 +35,7 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
             .build()
     }
 
-    private val retrofit by lazy {
+    private val retrofit by lazy(LazyThreadSafetyMode.NONE) {
         Retrofit.Builder()
             .baseUrl("http:${config.atxAgentIp}:${config.atxAgentPort}")
             .addConverterFactory(GsonConverterFactory.create(tGson))
@@ -43,11 +43,11 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
             .build()
     }
 
-    val apiService: TUiautomatorApiService by lazy {
+    val apiService: TUiautomatorApiService by lazy(LazyThreadSafetyMode.NONE) {
         retrofit.create(TUiautomatorApiService::class.java)
     }
 
-    val tools by lazy { TUiautomatorTools(this) }
+    val tools by lazy(LazyThreadSafetyMode.NONE) { TUiautomatorTools(this) }
 
     override val device: TUiautomatorDevice = TUiautomatorDevice(this)
 
@@ -66,7 +66,7 @@ class TUiautomatorService internal constructor(val config: TUiautomatorConfig) :
 
     override fun xpath(xpath: String): TUiautomatorXpath = TUiautomatorXpathObj(this, xpath)
 
-    override fun createTask(isTestMode: Boolean): TUiautomatorStepsTask = TUiautomatorStepsTaskImpl(isTestMode)
+    override fun createTask(): TUiautomatorStepsTask = TUiautomatorStepsTaskImpl()
 
     override fun createStep(step: suspend (task: TUiautomatorStepsTask) -> Int?): TUiautomatorStep =
         object : TUiautomatorStep(this) {

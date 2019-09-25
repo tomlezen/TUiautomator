@@ -52,7 +52,7 @@ ext {
             'qrgen'              : '2.5.0',
             'retrofit'           : '2.6.0',
             'rollviewpager'      : '1.4.6',
-            'room'               : '2.1.0-alpha06',
+            'room'               : '2.1.0',
             'rvAdapter'          : '2.9.45-androidx',
             'savedStateVersion'  : '1.0.0-alpha01',
             'spotless'           : '3.20.0',

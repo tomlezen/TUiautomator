@@ -52,11 +52,11 @@ interface TUiautomatorGestures {
      * @param sy Int
      * @param ex Int
      * @param ey Int
-     * @param steps Int 每步为5ms
+     * @param steps Int 每步为5ms 越大越接近真实位移距离
      * @return TUiautomatorResult<Boolean>
      */
     @TUiautomatorMethodName(TUiautomatorMethods.SWIPE)
-    suspend fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 10): TUiautomatorResult<Boolean>
+    suspend fun swipe(sx: Int, sy: Int, ex: Int, ey: Int, steps: Int = 20): TUiautomatorResult<Boolean>
 
     /**
      * 滑，扫(半分比).

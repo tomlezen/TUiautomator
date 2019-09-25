@@ -1,11 +1,10 @@
 package com.tlz.tuiautomator.step.impl
 
-import com.tlz.tuiautomator.onFailure
-import com.tlz.tuiautomator.runTCatching
 import com.tlz.tuiautomator.step.TUiautomatorStep
 import com.tlz.tuiautomator.step.TUiautomatorStepsTask
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -13,25 +12,36 @@ import java.util.concurrent.ConcurrentHashMap
  * Date: 2019-08-15.
  * Time: 15:46.
  */
-class TUiautomatorStepsTaskImpl(private val isTestMode: Boolean) : TUiautomatorStepsTask {
+class TUiautomatorStepsTaskImpl : TUiautomatorStepsTask {
 
     private var rootJob: Job? = null
 
     /** 用于对id去重复. */
-    private val steIdSet = mutableSetOf<Int>()
+    private val stepIdSet = mutableSetOf<Int>()
 
     /** 所有步骤. */
     private val steps = ConcurrentHashMap<Int, TUiautomatorStep>()
 
-    /** 开始不走id. */
+    /** 开始步骤id. */
     private var _startStepId: Int? = null
 
+    /** 运行状态回调. */
+    private val runningStateCallbacks = mutableSetOf<(Boolean) -> Unit>()
+
     override val isRunning: Boolean
-        get() = rootJob?.isActive == true
+        get() = rootJob?.isCancelled != null && rootJob?.isCancelled != false
+
+    override fun runningStateCallback(block: (running: Boolean) -> Unit, isAdd: Boolean) {
+        if (isAdd) {
+            runningStateCallbacks += block
+        } else {
+            runningStateCallbacks -= block
+        }
+    }
 
     @Synchronized
     override fun addStep(id: Int, step: TUiautomatorStep) {
-        steIdSet += id
+        stepIdSet += id
         steps[id] = step
     }
 
@@ -39,20 +49,15 @@ class TUiautomatorStepsTaskImpl(private val isTestMode: Boolean) : TUiautomatorS
 
     @Synchronized
     override fun start(startStepId: Int) {
-        if (isRunning || steps.isEmpty() || !steIdSet.contains(startStepId)) return
+        if (!stepIdSet.contains(startStepId)) throw IllegalArgumentException("not found stepId: $startStepId")
+        if (steps.isEmpty()) throw IllegalArgumentException("step is empty")
+        if (isRunning) return
 
         _startStepId = startStepId
-//        rootJob = if (isTestMode) {
-//
-//
-//        } else {
-//            GlobalScope.async {
-//
-//            }
-//        }
-        runBlocking {
+        rootJob = GlobalScope.async {
             runStep(null, startStepId)
         }
+        runningStateCallbacks.forEach { it.invoke(isRunning) }
     }
 
     override fun restart(startStepId: Int?) {
@@ -62,12 +67,14 @@ class TUiautomatorStepsTaskImpl(private val isTestMode: Boolean) : TUiautomatorS
 
     override fun stop() {
         rootJob?.cancel()
+        runningStateCallbacks.forEach { it.invoke(isRunning) }
     }
 
     override fun destroy() {
         stop()
-        steIdSet.clear()
+        stepIdSet.clear()
         steps.clear()
+        runningStateCallbacks.clear()
     }
 
     /**

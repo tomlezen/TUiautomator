@@ -33,7 +33,7 @@ class TUiautomatorSelectorsObj(
      * @param timeout Int? 等待时间
      * @return TUiautomatorResult<Boolean>
      */
-    private suspend fun wait(exists: Boolean = true, timeout: Int? = null): TUiautomatorResult<Boolean> =
+    override suspend fun wait(exists: Boolean, timeout: Int?): TUiautomatorResult<Boolean> =
         runTCatching {
             if (exists) {
                 submit(TUiautomatorMethods.WAIT_FOR_EXISTS, arrayOf((timeout ?: service.config.waitTimeout) * 1000))
