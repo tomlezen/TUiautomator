@@ -25,11 +25,19 @@ class TUiautomatorStepsTaskImpl : TUiautomatorStepsTask {
     /** 开始步骤id. */
     private var _startStepId: Int? = null
 
+    private val taskRunningListenerSet = mutableSetOf<TUiautomatorStepsTask.OnTaskRunningListener>()
+
     /** 运行状态回调. */
     private val runningStateCallbacks = mutableSetOf<(Boolean) -> Unit>()
 
+    private var _isRunning = false
+        set(value) {
+            field = value
+            runningStateCallbacks.forEach { it.invoke(value) }
+        }
+
     override val isRunning: Boolean
-        get() = rootJob?.isCancelled != null && rootJob?.isCancelled != false
+        get() = _isRunning
 
     override fun runningStateCallback(block: (running: Boolean) -> Unit, isAdd: Boolean) {
         if (isAdd) {
@@ -49,25 +57,26 @@ class TUiautomatorStepsTaskImpl : TUiautomatorStepsTask {
 
     @Synchronized
     override fun start(startStepId: Int) {
-        if (!stepIdSet.contains(startStepId)) throw IllegalArgumentException("not found stepId: $startStepId")
-        if (steps.isEmpty()) throw IllegalArgumentException("step is empty")
+        require(stepIdSet.contains(startStepId)) { "not found stepId: $startStepId" }
+        require(!steps.isEmpty()) { "step is empty" }
         if (isRunning) return
 
         _startStepId = startStepId
         rootJob = GlobalScope.async {
             runStep(null, startStepId)
         }
-        runningStateCallbacks.forEach { it.invoke(isRunning) }
+        _isRunning = true
     }
 
     override fun restart(startStepId: Int?) {
         stop()
         start(startStepId ?: _startStepId ?: return)
+        taskRunningListenerSet.forEach { it.onTaskRestart(startStepId) }
     }
 
     override fun stop() {
         rootJob?.cancel()
-        runningStateCallbacks.forEach { it.invoke(isRunning) }
+        _isRunning = false
     }
 
     override fun destroy() {
@@ -77,28 +86,44 @@ class TUiautomatorStepsTaskImpl : TUiautomatorStepsTask {
         runningStateCallbacks.clear()
     }
 
+    override fun registerRunningListener(
+        listener: TUiautomatorStepsTask.OnTaskRunningListener,
+        resgieter: Boolean
+    ) {
+        if (resgieter) {
+            taskRunningListenerSet += listener
+        } else {
+            taskRunningListenerSet -= listener
+        }
+    }
+
     /**
      * 执行步骤.
      * @param parentStepId Int?
      * @param stepId Int
      */
     private suspend fun runStep(parentStepId: Int?, stepId: Int) {
+        if (!isRunning) return
+        taskRunningListenerSet.forEach { it.onRunStep(parentStepId, stepId) }
         val step = steps[stepId]
         if (step != null) {
             step.parentStepId = parentStepId
             var retryCount = 0
             var nextStepId: Int? = null
-            while (retryCount <= step.retryCount) {
+            while (retryCount <= step.retryCount && isRunning) {
                 try {
                     nextStepId = step.run(this)
+                    // 重置重试次数
+                    retryCount = 0
                     break
                 } catch (e: Exception) {
                     retryCount++
+                    taskRunningListenerSet.forEach { it.onStepRunException(stepId, e) }
                 }
             }
             if (retryCount > step.retryCount) {
                 // 如果没有处理则直接重新开始.
-                if (!step.onFailureStrategy(this)) {
+                if (!step.onFailureStrategy(this) && isRunning) {
                     restart()
                 }
             } else if (nextStepId != null) {

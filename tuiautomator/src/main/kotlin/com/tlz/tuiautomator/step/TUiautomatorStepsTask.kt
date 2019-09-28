@@ -1,5 +1,7 @@
 package com.tlz.tuiautomator.step
 
+import java.lang.Exception
+
 /**
  * 步骤容器，用于对步骤的管理.
  * By tomlezen.
@@ -54,4 +56,40 @@ interface TUiautomatorStepsTask {
      * 销毁任务.
      */
     fun destroy()
+
+    fun registerRunningListener(listener: OnTaskRunningListener, resgieter: Boolean)
+
+    /**
+     * 任务运行监听.
+     */
+    interface OnTaskRunningListener {
+
+        /**
+         * 当前准备执行的step.
+         * @param parentStepId Int?
+         * @param stepId Int
+         */
+        fun onRunStep(parentStepId: Int?, stepId: Int)
+
+        /**
+         * step运行异常.
+         * @param stepId Int
+         * @param exception Exception
+         */
+        fun onStepRunException(stepId: Int, exception: Exception)
+
+        /**
+         * step重试.
+         * @param stepId Int
+         * @param retryCount Int 当前重试次数
+         * @param maxRetryCount Int 最大从事次数
+         */
+        fun onStepRetry(stepId: Int, retryCount: Int, maxRetryCount: Int)
+
+        /**
+         * 任务重新开始.
+         * @param startStepId Int?
+         */
+        fun onTaskRestart(startStepId: Int?)
+    }
 }

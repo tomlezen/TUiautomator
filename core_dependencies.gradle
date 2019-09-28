@@ -21,7 +21,7 @@ dependencies {
 //    implementation "com.github.tomlezen:andexts:${versions.andexts}"
 //    implementation "com.google.android.material:material:${versions.material}"
     implementation "com.google.code.gson:gson:${versions.gson}"
-    implementation "com.orhanobut:logger:${versions.logger}"
+//    implementation "com.orhanobut:logger:${versions.logger}"
 //    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
 //    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leakcanary}"
     api "com.squareup.retrofit2:retrofit:${versions.retrofit}"

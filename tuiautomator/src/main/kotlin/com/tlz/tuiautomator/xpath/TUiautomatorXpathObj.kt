@@ -26,7 +26,8 @@ class TUiautomatorXpathObj(private val service: TUiautomatorService, private val
             val xml = service.device.dumpHierarchy().getOrThrow()
             // 先解析修改node
             val reader = SAXReader()
-            val document = reader.read(ByteArrayInputStream(xml.toByteArray()))
+            // 这里有坑 字符串中可能包含表情
+            val document = reader.read(ByteArrayInputStream(xml.replace("&#", "**").toByteArray()))
             val rootEle = document.rootElement
             if (rootEle.name == "hierarchy") {
                 val it = rootEle.elementIterator()

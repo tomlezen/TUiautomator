@@ -10,7 +10,7 @@ import com.tlz.tuiautomator.exceptions.TUiautomatorStepRunException
  * Time: 15:28.
  * @property retryCount Int 重试次数.
  */
-abstract class TUiautomatorStep(protected val automator: TUiautomator, val retryCount: Int = 2) {
+abstract class TUiautomatorStep(protected val automator: TUiautomator, val retryCount: Int = 1) {
 
     /** 父任务id. */
     var parentStepId: Int? = null

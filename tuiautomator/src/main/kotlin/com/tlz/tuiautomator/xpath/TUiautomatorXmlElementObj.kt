@@ -1,6 +1,5 @@
 package com.tlz.tuiautomator.xpath
 
-import com.sun.org.apache.xerces.internal.impl.xs.opti.AttrImpl
 import com.tlz.tuiautomator.TUiautomator
 import com.tlz.tuiautomator.TUiautomatorResult
 import com.tlz.tuiautomator.i.handlers.TUiautomatorDeviceHandler
