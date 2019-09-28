@@ -1,4 +1,4 @@
-# TUiautomator - uiautomator2的kotlin版本
+# TUiautomator - uiautomator2的kotlin版本（仅供学习参考）
 
 TUiautomator是根据自己需求，参照[uiautomator2](https://github.com/openatx/uiautomator2)翻译的kotlin版本，只翻译了常用、需求高的api
 翻译的初衷是：
